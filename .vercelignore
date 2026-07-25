@@ -1,0 +1,10 @@
+.env
+.env.*
+*.save
+.DS_Store
+contracts
+.claude
+WHALE-RADAR-README.md
+TOKEN-AGENT-README.md
+supabase
+src

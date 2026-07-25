@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BUILD AGENT — HOODFACTORY</title>
+<script>if(new URLSearchParams(location.search).get('embed')==='1')document.documentElement.classList.add('embedded');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.umd.min.js"></script>
+<script src="hood-deployment.js"></script>
+<script defer src="privy-wallet.js"></script>
+<style>
+  :root{
+    --void:#0b0c08;
+    --steel:#15170f;
+    --steel-2:#1c1e14;
+    --line:#33361f;
+    --acid:#d9f24b;
+    --acid-dim:#a8bc3a;
+    --concrete:#9a9d87;
+    --hazard:#ff5a1f;
+    --paper:#f4f5e9;
+    --pixel:'Press Start 2P', monospace;
+    --mono:'IBM Plex Mono', monospace;
+    --head:'Space Grotesk', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--void); color:var(--paper); font-family:var(--head); line-height:1.55; }
+  ::selection{background:var(--acid); color:var(--void);}
+  a{color:inherit;}
+  .wrap{max-width:820px; margin:0 auto; padding:0 20px;}
+
+  .conveyor{
+    height:14px; width:100%;
+    background-image:repeating-linear-gradient(-45deg, var(--acid) 0px, var(--acid) 8px, var(--void) 8px, var(--void) 16px);
+    background-size:200% 100%; animation:belt 6s linear infinite;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  @keyframes belt{ from{background-position:0 0;} to{background-position:-64px 0;} }
+  @media (prefers-reduced-motion:reduce){ .conveyor{animation:none;} }
+
+  header{ position:sticky; top:0; z-index:50; background:rgba(11,12,8,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 20px; max-width:820px; margin:0 auto; }
+  .brand{font-family:var(--pixel); font-size:11px; letter-spacing:1px; color:var(--acid); text-decoration:none;}
+  .navlinks{font-family:var(--mono); font-size:12px; color:var(--concrete); text-decoration:none;}
+
+  .hero{padding:52px 0 36px; border-bottom:1px solid var(--line);}
+  .eyebrow{ font-family:var(--mono); font-size:12px; color:var(--acid-dim); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .dot{width:8px; height:8px; background:var(--acid); display:inline-block; animation:blink 1.4s steps(2) infinite;}
+  @keyframes blink{50%{opacity:.15;}}
+  h1{ font-family:var(--pixel); font-size:clamp(20px,4vw,30px); line-height:1.5; margin-bottom:16px; }
+  h1 span{color:var(--acid);}
+  .lead{font-size:16px; color:var(--concrete); max-width:60ch;}
+  .lead b{color:var(--paper);}
+
+  .step-rail{display:flex; gap:8px; margin:28px 0 8px; font-family:var(--mono); font-size:12px;}
+  .step-pill{ flex:1; padding:9px 10px; text-align:center; border:1px solid var(--line); color:var(--concrete); background:var(--steel); }
+  .step-pill.active{color:var(--void); background:var(--acid); border-color:var(--acid); font-weight:600;}
+  .step-pill.done{color:var(--acid); border-color:var(--acid-dim);}
+
+  section{padding:36px 0;}
+  .card{ background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); border:1px solid var(--line); border-radius:2px; padding:26px; backdrop-filter:blur(4px); }
+
+  label{display:block; font-family:var(--mono); font-size:12px; color:var(--acid-dim); letter-spacing:.5px; text-transform:uppercase; margin:18px 0 7px;}
+  label:first-child{margin-top:0;}
+  .hint{font-family:var(--mono); font-size:11.5px; color:var(--concrete); margin-top:6px; line-height:1.6;}
+
+  input[type=text], input[type=password], textarea, select{
+    width:100%; background:var(--steel-2); border:1px solid var(--line); color:var(--paper);
+    font-family:var(--mono); font-size:14px; padding:11px 12px; border-radius:2px; outline:none; transition:border-color .15s;
+  }
+  input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus{border-color:var(--acid);}
+  textarea{resize:vertical; min-height:70px;}
+
+  .provider-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:4px;}
+  .provider-opt{ border:1px solid var(--line); background:var(--steel-2); padding:12px 10px; cursor:pointer; text-align:center; font-family:var(--mono); font-size:12.5px; color:var(--concrete); }
+  .provider-opt.sel{border-color:var(--acid); color:var(--acid); background:rgba(217,242,75,0.06);}
+  .provider-opt b{display:block; font-size:12.5px; margin-bottom:2px; color:inherit;}
+  .provider-opt small{display:block; font-size:10.5px; color:var(--concrete); margin-top:2px;}
+
+  .key-row{display:flex; gap:8px;}
+  .key-row input{flex:1;}
+  .icon-btn{ background:var(--steel-2); border:1px solid var(--line); color:var(--concrete); font-family:var(--mono); font-size:12px; padding:0 14px; cursor:pointer; }
+  .icon-btn:hover{color:var(--acid); border-color:var(--acid-dim);}
+
+
+  .tool-row{display:flex; align-items:flex-start; gap:10px; padding:12px; border:1px solid var(--line); background:var(--steel-2); margin-top:8px;}
+  .tool-row input{width:auto; accent-color:var(--acid); margin-top:3px;}
+  .tool-row.disabled{opacity:.4;}
+  .tool-row .tname{font-family:var(--mono); font-size:13px; color:var(--paper);}
+  .tool-row .tdesc{font-family:var(--mono); font-size:11.5px; color:var(--concrete); margin-top:3px;}
+
+  .btn{ font-family:var(--mono); font-size:13px; font-weight:600; border:1px solid var(--acid); color:var(--void); background:var(--acid);
+    padding:13px 22px; cursor:pointer; letter-spacing:.3px; width:100%; margin-top:24px; transition:transform .12s ease, box-shadow .12s ease; }
+  .btn:hover{transform:translateY(-1px); box-shadow:3px 3px 0 var(--hazard);}
+  .btn:active{transform:translateY(0); box-shadow:none;}
+  .btn:disabled{opacity:.4; cursor:not-allowed; transform:none; box-shadow:none;}
+  .btn.ghost{background:transparent; color:var(--acid); width:auto; margin-top:0;}
+
+  .err{ font-family:var(--mono); font-size:12.5px; color:var(--hazard); border:1px solid var(--hazard); background:rgba(255,90,31,0.08); padding:10px 12px; margin-top:14px; display:none; }
+  .err.show{display:block;}
+
+  #formSection{display:none;}
+  #chatSection{display:none;}
+  #dashboardSection{display:none;}
+
+  .dash-head{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px; margin-bottom:20px;}
+  .dash-head h1{font-family:var(--pixel); font-size:16px; margin-bottom:8px;}
+  .dash-head .hint{margin:0; max-width:52ch;}
+  .agents-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:14px;}
+  .agent-card{padding:18px; display:flex; flex-direction:column; gap:6px;}
+  .agent-card-name{font-family:var(--head); font-weight:700; font-size:15px; color:var(--paper);}
+  .agent-card-meta{font-family:var(--mono); font-size:11.5px; color:var(--concrete);}
+  .agent-card-actions{display:flex; gap:8px; margin-top:12px;}
+  .agent-card-actions .btn{margin-top:0; width:auto; flex:1; padding:9px 12px; font-size:12px;}
+  .agent-card-actions .icon-btn{flex:0 0 auto;}
+  .agents-empty{text-align:center; color:var(--concrete); font-family:var(--mono); font-size:12.5px;}
+
+  #keyPromptModal{ position:fixed; inset:0; z-index:900; background:rgba(11,12,8,0.88); display:none; align-items:center; justify-content:center; padding:20px; }
+  #keyPromptModal.show{display:flex;}
+  #keyPromptModal .gate-card{border-color:var(--acid); text-align:left;}
+  #keyPromptModal h2{font-family:var(--pixel); font-size:13px; margin-bottom:6px;}
+  #keyPromptModal .kp-sub{font-family:var(--mono); font-size:12px; color:var(--concrete); margin-bottom:16px;}
+  #keyPromptModal input{margin-bottom:6px;}
+  #keyPromptModal .btn{margin-top:14px;}
+  #keyPromptModal .btn.ghost{text-align:center; margin-top:10px;}
+  .nav-links-group{display:flex; align-items:center; gap:18px;}
+
+  #tosModal{ position:fixed; inset:0; z-index:950; background:rgba(11,12,8,0.9); display:none; align-items:center; justify-content:center; padding:20px; overflow-y:auto; }
+  #tosModal.show{display:flex;}
+  .tos-card{ width:min(560px,94vw); max-height:88vh; overflow-y:auto; border:1px solid var(--acid); background:var(--steel); padding:28px 26px; }
+  .tos-card h2{font-family:var(--pixel); font-size:14px; color:var(--paper); margin-bottom:6px;}
+  .tos-card .tos-sub{font-family:var(--mono); font-size:11.5px; color:var(--concrete); margin-bottom:20px;}
+  .tos-block{margin-bottom:18px;}
+  .tos-block h3{font-family:var(--mono); font-size:12px; color:var(--acid); letter-spacing:.5px; text-transform:uppercase; margin-bottom:8px;}
+  .tos-block ul{padding-left:18px; display:flex; flex-direction:column; gap:6px;}
+  .tos-block li{font-family:var(--mono); font-size:12.5px; color:var(--paper); line-height:1.6;}
+  .tos-block p{font-family:var(--mono); font-size:12.5px; color:var(--paper); line-height:1.7;}
+  .tos-warn{ border-left:2px solid var(--hazard); padding:12px 14px; background:rgba(255,90,31,0.07); }
+  .tos-warn h3{color:var(--hazard);}
+  .tos-agree{ display:flex; align-items:flex-start; gap:10px; border-top:1px solid var(--line); padding-top:18px; margin-top:6px; }
+  .tos-agree input{width:auto; margin-top:3px; accent-color:var(--acid);}
+  .tos-agree label{margin:0; text-transform:none; font-family:var(--mono); font-size:12.5px; color:var(--paper); letter-spacing:0; cursor:pointer;}
+  .tos-actions{display:flex; gap:12px; margin-top:18px;}
+  .tos-actions .btn{margin-top:0; flex:1;}
+  .tos-actions .btn.ghost{flex:0 0 auto; text-align:center;}
+  .chat-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;}
+  .agent-name{font-family:var(--pixel); font-size:13px; color:var(--acid);}
+  .live-badge{font-family:var(--mono); font-size:11px; color:var(--acid); display:flex; align-items:center; gap:6px;}
+  .chat-box{ border:1px solid var(--line); background:var(--steel); height:420px; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:14px; }
+  .msg{max-width:85%; font-family:var(--mono); font-size:13.5px; line-height:1.65; padding:10px 13px; white-space:pre-wrap;}
+  .msg.user{align-self:flex-end; background:var(--acid); color:var(--void);}
+  .msg.agent{align-self:flex-start; background:var(--steel-2); border:1px solid var(--line); color:var(--paper);}
+  .msg.sys{align-self:center; color:var(--concrete); font-size:11.5px; background:none;}
+  .chat-input-row{display:flex; gap:8px; margin-top:10px;}
+  .chat-input-row textarea{flex:1; min-height:44px; max-height:120px;}
+  .send-btn{width:auto; margin-top:0; padding:0 20px;}
+  .typing{align-self:flex-start; font-family:var(--mono); font-size:12.5px; color:var(--concrete);}
+  .deploy-card{
+    align-self:flex-start; border:1px solid var(--acid); background:rgba(217,242,75,0.05);
+    padding:14px; font-family:var(--mono); font-size:12.5px; color:var(--paper); max-width:86%;
+  }
+  .deploy-card .dc-row{display:flex; justify-content:space-between; gap:18px; padding:3px 0;}
+  .deploy-card .dc-row span:first-child{color:var(--concrete);}
+  .deploy-card .btn{width:100%; margin-top:12px; padding:10px;}
+
+  /* ---------- Free agent panel ---------- */
+  .free-agent{ border:1px solid var(--acid); background:rgba(217,242,75,0.04); padding:20px; margin-bottom:34px; }
+  .fa-head{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px; }
+  .fa-usage{ font-family:var(--mono); font-size:11.5px; color:var(--acid-dim); }
+  .fa-usage.low{ color:var(--hazard); }
+  .fa-statusbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 11px;border:1px solid var(--line);background:var(--void);margin-bottom:10px}.fa-statusbar strong{font:10px var(--mono);color:var(--paper)}
+  .fa-image-btn{margin-top:0}.fa-image-preview{display:none;align-items:center;gap:10px;padding:9px;border:1px solid var(--line);background:var(--void);margin-top:9px}.fa-image-preview.show{display:flex}.fa-image-preview img{width:52px;height:52px;object-fit:cover;border:1px solid var(--line)}.fa-image-preview span{flex:1;min-width:0;font:10px var(--mono);color:var(--acid);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.msg img{display:block;width:min(220px,100%);max-height:180px;object-fit:cover;margin-bottom:8px;border:1px solid var(--line)}
+  .free-agent .chat-box{height:340px;}
+  #limitModal{ position:fixed; inset:0; z-index:960; background:rgba(11,12,8,0.9); display:none; align-items:center; justify-content:center; padding:20px; }
+  #limitModal.show{ display:flex; }
+  #limitModal h2{ font-family:var(--pixel); font-size:13px; color:var(--hazard); margin-bottom:8px; }
+
+  /* ---------- Branded confirmation dialog ---------- */
+  #confirmModal{
+    position:fixed; inset:0; z-index:980; display:none; align-items:center; justify-content:center;
+    padding:20px; background:rgba(5,6,3,.86); backdrop-filter:blur(7px);
+  }
+  #confirmModal.show{display:flex;}
+  .confirm-card{
+    position:relative; width:min(440px,94vw); padding:28px;
+    border:1px solid var(--hazard); background:var(--steel);
+    box-shadow:10px 10px 0 rgba(0,0,0,.38);
+  }
+  .confirm-card::before{
+    content:''; position:absolute; inset:0 0 auto; height:5px;
+    background:repeating-linear-gradient(-45deg,var(--hazard) 0 7px,var(--void) 7px 14px);
+  }
+  .confirm-kicker{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--hazard);margin-bottom:14px;}
+  .confirm-card h2{font-family:var(--pixel);font-size:14px;line-height:1.55;margin-bottom:12px;}
+  .confirm-card p{font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--concrete);}
+  .confirm-card p strong{color:var(--paper);overflow-wrap:anywhere;}
+  .confirm-note{margin-top:14px;padding:10px 12px;border-left:2px solid var(--hazard);background:rgba(255,90,31,.06);}
+  .confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px;}
+  .confirm-actions .btn{margin:0;width:100%;}
+  .confirm-actions .confirm-cancel{background:transparent;color:var(--acid);border-color:var(--line);box-shadow:none;}
+  .confirm-actions .confirm-delete{background:var(--hazard);border-color:var(--hazard);color:var(--void);}
+  .confirm-actions .confirm-delete:hover{box-shadow:3px 3px 0 var(--acid);}
+
+  /* ---------- Options (no-agent state) ---------- */
+  .opt-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:720px){ .opt-grid{ grid-template-columns:1fr; } }
+  .opt-card{ border:1px solid var(--line); background:var(--steel); padding:22px; display:flex; flex-direction:column; }
+  .opt-card .opt-tag{ font-family:var(--pixel); font-size:9px; letter-spacing:1px; color:var(--hazard); margin-bottom:12px; }
+  .opt-card h3{ font-family:var(--head); font-weight:700; font-size:17px; color:var(--paper); margin-bottom:8px; }
+  .opt-card p{ font-family:var(--mono); font-size:12.5px; color:var(--concrete); line-height:1.7; flex:1; }
+  .opt-card .btn{ margin-top:16px; }
+
+  .disclaimer{ font-family:var(--mono); font-size:11.5px; color:var(--concrete); line-height:1.8; border-left:2px solid var(--acid-dim); padding-left:14px; margin-top:40px; }
+  footer{border-top:1px solid var(--line); padding:24px 0; text-align:center; font-family:var(--mono); font-size:11px; color:var(--concrete);}
+
+  /* ---------- Wallet gate ---------- */
+  #walletGate{
+    position:fixed; inset:0; z-index:1000;
+    background:var(--void);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  #walletGate.hidden{display:none;}
+  .gate-card{
+    width:min(420px,92vw); text-align:center;
+    border:1px solid var(--hazard); padding:32px 26px;
+    background:
+      repeating-linear-gradient(-45deg, rgba(255,90,31,0.08) 0 10px, transparent 10px 20px),
+      var(--steel);
+  }
+  .gate-icon{
+    width:56px; height:56px; margin:0 auto 20px; border:2px solid var(--acid);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--pixel); font-size:18px; color:var(--acid);
+  }
+  .gate-card h2{ font-family:var(--pixel); font-size:15px; color:var(--paper); margin-bottom:14px; line-height:1.6; }
+  .gate-card p{ font-family:var(--mono); font-size:13px; color:var(--concrete); margin-bottom:22px; line-height:1.7; }
+  .gate-err{ font-family:var(--mono); font-size:12px; color:var(--hazard); margin-top:14px; display:none; }
+  .gate-err.show{display:block;}
+  #appBody{ display:none; }
+  #appBody.ready{ display:block; }
+  .embedded header,.embedded #appBody>header+.conveyor{display:none;}
+  .embedded .wrap{max-width:920px;}
+  .embedded .hero{padding-top:38px;}
+  @media(max-width:700px){
+    html{scroll-padding-top:12px;}
+    body{overflow-x:hidden;-webkit-text-size-adjust:100%;}
+    .wrap{padding-left:14px;padding-right:14px;}
+    .embedded .wrap{max-width:100%;}
+    .embedded .hero{padding:28px 0 22px;}
+    .hero{padding:38px 0 26px;}
+    .eyebrow{font-size:9px;line-height:1.7;letter-spacing:1.2px;align-items:flex-start;}
+    h1{font-size:clamp(18px,7vw,25px);line-height:1.45;overflow-wrap:anywhere;}
+    .lead{font-size:14px;line-height:1.7;}
+    .step-rail{gap:5px;margin-top:22px;font-size:9px;}
+    .step-pill{padding:9px 4px;line-height:1.35;}
+    section{padding:24px 0;}
+    .card{padding:18px 14px;}
+    .provider-grid{grid-template-columns:1fr;gap:7px;}
+    .provider-opt{padding:11px;}
+    .key-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;}
+    .key-row input{min-width:0;}
+    .icon-btn{padding:0 11px;min-height:44px;}
+    input[type=text],input[type=password],textarea,select{font-size:16px;min-height:44px;}
+    .tool-row{padding:11px 10px;gap:9px;}
+    .tool-row input{width:18px;height:18px;flex:0 0 18px;}
+    .tool-row .tdesc{font-size:10.5px;line-height:1.65;}
+    .free-agent{padding:14px 11px;margin-bottom:24px;}
+    .fa-head{align-items:flex-start;}
+    .fa-statusbar{padding:8px}.fa-statusbar strong{display:none}.fa-usage{font-size:10px}.free-agent .chat-box{height:52dvh;min-height:300px;max-height:520px}.free-agent .chat-input-row{grid-template-columns:88px minmax(0,1fr)}.free-agent .chat-input-row textarea{grid-column:1/-1}.free-agent .chat-input-row .fa-image-btn{grid-column:1;width:88px!important}.free-agent .chat-input-row .send-btn{grid-column:2}
+    .agent-name{font-size:10px;line-height:1.6;}
+    .chat-box{height:52vh;min-height:320px;padding:11px;gap:10px;}
+    .msg{max-width:96%;font-size:12px;line-height:1.6;padding:9px 10px;}
+    .chat-input-row{display:grid;grid-template-columns:1fr;}
+    .chat-input-row textarea{min-height:68px;max-height:140px;}
+    .send-btn{width:100%;min-height:44px;padding:11px 16px;}
+    .deploy-card{max-width:100%;width:100%;overflow:hidden;}
+    .deploy-card .dc-row{gap:8px;align-items:flex-start;}
+    .deploy-card .dc-row span:last-child{text-align:right;overflow-wrap:anywhere;}
+    .opt-card{padding:18px 15px;}
+    .dash-head{align-items:flex-start;}
+    .dash-head .btn{width:100%!important;}
+    .agents-grid{grid-template-columns:1fr;}
+    .agent-card-actions{display:grid;grid-template-columns:1fr auto;}
+    .tos-card{width:100%;max-height:92dvh;padding:20px 15px;}
+    .tos-card h2{font-size:12px;}
+    .tos-block li,.tos-block p,.tos-agree label{font-size:11px;}
+    .tos-actions{display:grid;grid-template-columns:1fr;}
+    .tos-actions .btn,.tos-actions .btn.ghost{width:100%;}
+    .gate-card{padding:24px 16px;}
+    #keyPromptModal,#limitModal,#tosModal,#confirmModal{padding:10px;}
+    .confirm-card{width:100%;padding:24px 16px 16px;box-shadow:5px 5px 0 rgba(0,0,0,.38);}
+    .confirm-card h2{font-size:12px;}
+    .confirm-card p{font-size:11.5px;}
+    .confirm-actions{grid-template-columns:1fr;margin-top:18px;}
+    .confirm-actions .btn{min-height:46px;}
+    .disclaimer{font-size:10.5px;margin-top:28px;}
+    footer{font-size:9px;padding:18px 14px;}
+  }
+</style>
+</head>
+<body>
+
+<div id="walletGate">
+  <div class="gate-card">
+    <div class="gate-icon">🔒</div>
+    <h2>ACCESS LOCKED</h2>
+    <p>Agent Builder can only be accessed once your wallet is connected. Connect your wallet first to continue building your AI agent.</p>
+    <button class="btn" id="gateConnectBtn" style="width:auto; padding:12px 26px;">Connect Wallet</button>
+    <div class="gate-err" id="gateErr">No wallet browser extension detected. Open this page in a browser that has a wallet extension installed (e.g. MetaMask).</div>
+  </div>
+</div>
+
+<div id="appBody">
+
+<header>
+  <nav>
+    <a class="brand" href="index.html">HOODFACTORY</a>
+    <div class="nav-links-group">
+      <a class="navlinks" href="#" id="navMyAgents">Agent</a>
+      <a class="navlinks" href="index.html">← Back</a>
+    </div>
+  </nav>
+</header>
+<div class="conveyor"></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div id="heroIntro">
+      <div class="eyebrow"><span class="dot"></span>HOODFACTORY AGENT — LIVE ON ROBINHOOD CHAIN</div>
+      <h1>MEET YOUR AGENT.<br><span>10 FREE CHATS.</span></h1>
+      <p class="lead">Just chat to get things done on-chain: <b>launch a token, look up any token, check your wallet, swap, and send</b> — all through the HOODFACTORY agent. Every transaction is signed by <b>your own wallet</b>, so you stay fully in control. Start free — 10 messages per wallet, no setup, no key needed. Try it right below.</p>
+    </div>
+    <div id="heroBuild" style="display:none;">
+      <div class="eyebrow"><span class="dot"></span>ASSEMBLY LINE — LIVE, NOT A DEMO</div>
+      <h1>BUILD YOUR AGENT.<br><span>BRING YOUR OWN KEY.</span></h1>
+      <p class="lead">Choose an AI provider, select the tools your agent can use, and connect your own API key. Your agent runs with real provider access—not a simulation. <b>HOODFACTORY never stores, logs, or retains your API key.</b> It is sent directly from your browser to the provider you choose and never passes through HOODFACTORY's servers. Your credentials remain private, and API usage is billed directly to your provider account.</p>
+    </div>
+
+    <a href="#" class="navlinks" id="backToDashboardBtn" style="display:inline-block; margin-top:18px;">← Back</a>
+
+    <div class="step-rail">
+      <div class="step-pill active" id="stepPill1">1. PROVIDER & KEY</div>
+      <div class="step-pill" id="stepPill2">2. CONFIGURE</div>
+      <div class="step-pill" id="stepPill3">3. USE AGENT</div>
+    </div>
+  </div>
+
+  <section id="dashboardSection">
+    <!-- ===== Free HOODFACTORY agent (rate-limited, runs on the platform key) ===== -->
+    <div class="free-agent">
+      <div class="fa-statusbar"><strong>FACTORY AI AGENT</strong><span class="fa-usage" id="faUsage">—</span><button class="icon-btn" id="faHistoryBtn" type="button" title="Chat history">◷</button></div>
+      <div class="chat-box" id="faChatBox"></div>
+      <div class="fa-image-preview" id="faImagePreview"><img id="faImageThumb" alt="Attached image"><span id="faImageName"></span><button class="icon-btn" id="faImageRemove" type="button">Remove</button></div>
+      <div class="chat-input-row">
+        <input type="file" id="faImageInput" accept="image/png,image/jpeg,image/webp" hidden>
+        <button class="btn ghost fa-image-btn" id="faImageBtn" type="button">＋ Image</button>
+        <textarea id="faInput" placeholder='e.g. "create me a token named Factory Hood ticker FHOOD" or "check my balance"'></textarea>
+        <button class="btn send-btn" id="faSendBtn">Send</button>
+      </div>
+    </div>
+
+    <!-- Shown when this wallet has no saved agent yet -->
+    <div id="agentOptions" style="display:none;">
+      <div class="opt-grid">
+        <div class="opt-card">
+          <div class="opt-tag">GO UNLIMITED</div>
+          <h3>Unlimited chats — $10 / month</h3>
+          <p>Remove the 10-message limit and keep using the HOODFACTORY agent without interruption. Paid on-chain in ETH — your wallet signs the payment, and it renews only when you choose.</p>
+          <button class="btn" id="optSubscribeBtn">Subscribe — $10 / month <span id="optSubPrice" style="opacity:.7;"></span></button>
+        </div>
+        <div class="opt-card">
+          <div class="opt-tag">BRING YOUR OWN KEY</div>
+          <h3>Create your own agent (BYOK)</h3>
+          <p>Prefer no limits and full control? Build a custom agent with your own API key — it runs straight from your browser, and your key is never sent to HOODFACTORY's servers.</p>
+          <button class="btn ghost" id="optCreateBtn" style="width:100%;">Create your own agent →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shown only after this wallet has created at least one agent -->
+    <div id="myAgentsBlock" style="display:none;">
+      <div class="dash-head">
+        <div>
+          <h1>MY AGENTS</h1>
+          <p class="hint">Saved in this browser, per wallet address — they stay even if you refresh or log out. Your API key is <b>not</b> saved; you'll be asked to enter it again each time you chat, for your own security.</p>
+        </div>
+        <button class="btn" id="newAgentBtn" style="width:auto; margin-top:0;">+ New Agent</button>
+      </div>
+      <div id="agentsGrid" class="agents-grid"></div>
+    </div>
+  </section>
+
+  <section id="formSection">
+    <div class="card">
+
+      <label>AI Provider</label>
+      <div class="provider-grid" id="providerGrid">
+        <div class="provider-opt sel" data-provider="anthropic"><b>Anthropic</b><small>Claude</small></div>
+        <div class="provider-opt" data-provider="openai"><b>OpenAI</b><small>GPT</small></div>
+        <div class="provider-opt" data-provider="google"><b>Google</b><small>Gemini</small></div>
+      </div>
+      <div class="hint" id="providerHint"></div>
+
+      <label>Your API key</label>
+      <div class="key-row">
+        <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off">
+        <button class="icon-btn" id="toggleKeyBtn" type="button">Show</button>
+      </div>
+      <div class="hint" id="keyHint"></div>
+
+      <label>Model</label>
+      <select id="modelSelect"></select>
+      <div class="hint">Not sure? The default option is a solid general-purpose pick. Check <span id="modelDocsLink"></span> for the full, current model list.</div>
+
+      <label>Agent name</label>
+      <input type="text" id="agentNameInput" placeholder='e.g. "Crypto Research Assistant"'>
+
+      <label>Tone of voice</label>
+      <select id="toneSelect">
+        <option value="friendly and casual">Friendly & casual</option>
+        <option value="formal and professional">Formal & professional</option>
+        <option value="technical and to the point">Technical & to-the-point</option>
+        <option value="upbeat and energetic">Upbeat & energetic</option>
+      </select>
+
+      <label>Tools</label>
+      <div class="tool-row" id="webSearchRow">
+        <input type="checkbox" id="webSearchToggle">
+        <div>
+          <div class="tname">Web Search (live)</div>
+          <div class="tdesc" id="webSearchDesc">The agent can search the internet in real time while answering.</div>
+        </div>
+      </div>
+      <div class="tool-row" id="whaleToolsRow">
+        <input type="checkbox" id="whaleToolsToggle" checked>
+        <div>
+          <div class="tname">Whale Radar Tools</div>
+          <div class="tdesc" id="whaleToolsDesc">The agent can call your whale-radar API before answering: signal, transfers, holders, a contract risk check (verified source, risky ABI functions, holder concentration), and wallet labeling (contract vs exchange vs plain wallet). Real on-chain data, not guesses.</div>
+        </div>
+      </div>
+      <div class="tool-row" id="onchainToolsRow">
+        <input type="checkbox" id="onchainToolsToggle" checked>
+        <div>
+          <div class="tname">On-chain Tools (HOODFACTORY contracts)</div>
+          <div class="tdesc" id="onchainToolsDesc">The agent can act on Robinhood Chain through the HOODFACTORY contracts: create a token on the launchpad, check your wallet balances, swap tokens, and send tokens. Every transaction still shows a confirm card and is signed by YOUR wallet — the agent never holds funds or keys.</div>
+        </div>
+      </div>
+
+      <label>Constraints (optional)</label>
+      <textarea id="constraintsInput" placeholder="e.g. never give financial advice, always keep replies under 100 words"></textarea>
+
+      <div class="err" id="formErr"></div>
+      <button class="btn" id="assembleBtn">BUILD AGENT →</button>
+    </div>
+
+    <p class="disclaimer">
+      When you click "Build Agent," your browser assembles the configuration and connects directly to your selected provider. HOODFACTORY never receives, stores, logs, or retains your API key.
+    </p>
+  </section>
+
+  <section id="chatSection">
+    <div class="chat-head">
+      <div class="agent-name" id="chatAgentName">AGENT</div>
+      <div class="live-badge"><span class="dot"></span>LIVE — running on your own key</div>
+    </div>
+    <div class="chat-box" id="chatBox"></div>
+    <div class="chat-input-row">
+      <textarea id="chatInput" placeholder="Message your agent..."></textarea>
+      <button class="btn send-btn" id="sendBtn">Send</button>
+    </div>
+    <div style="margin-top:16px; display:flex; gap:18px; flex-wrap:wrap;">
+      <button class="btn ghost" id="rebuildBtn">← Build a new agent / change configuration</button>
+      <button class="btn ghost" id="backToDashboardFromChatBtn">← My Agents</button>
+    </div>
+  </section>
+</div>
+
+<div id="keyPromptModal">
+  <div class="gate-card" style="width:min(380px,92vw);">
+    <h2>ENTER API KEY</h2>
+    <div class="kp-sub" id="keyPromptAgentLabel"></div>
+    <input type="password" id="keyPromptInput" placeholder="API key" autocomplete="off">
+    <div class="gate-err" id="keyPromptErr">Key is empty or doesn't match the format for this provider.</div>
+    <button class="btn" id="keyPromptStartBtn">Start Chat</button>
+    <button class="btn ghost" id="keyPromptCancelBtn" style="width:100%;">Cancel</button>
+  </div>
+</div>
+
+<div id="limitModal">
+  <div class="gate-card" style="width:min(400px,92vw); border-color:var(--hazard);">
+    <h2>FREE LIMIT REACHED</h2>
+    <div class="kp-sub">You've used all 10 free messages for this wallet. Resets in about 24 hours<span id="limitReset"></span>. To keep chatting now, choose one:</div>
+    <button class="btn" id="subscribeBtn">Subscribe — $10 / month <span id="subPriceEth" style="opacity:.7;"></span></button>
+    <button class="btn ghost" id="byokBtn" style="width:100%; margin-top:10px;">Use my own API key (build an agent) →</button>
+    <div class="gate-err" id="limitErr"></div>
+    <button class="btn ghost" id="limitCloseBtn" style="width:100%; margin-top:10px;">Close</button>
+  </div>
+</div>
+
+<div id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmMessage">
+  <div class="confirm-card">
+    <div class="confirm-kicker">CONFIRM ACTION</div>
+    <h2 id="confirmTitle">DELETE AGENT?</h2>
+    <p id="confirmMessage"></p>
+    <p class="confirm-note" id="confirmNote">This removes the local agent configuration from this browser. This action cannot be undone.</p>
+    <div class="confirm-actions">
+      <button class="btn confirm-cancel" id="confirmCancelBtn" type="button">Keep Agent</button>
+      <button class="btn confirm-delete" id="confirmAcceptBtn" type="button">Delete Agent</button>
+    </div>
+  </div>
+</div>
+
+<div id="tosModal">
+  <div class="tos-card">
+    <h2>BEFORE YOU BUILD</h2>
+    <div class="tos-sub">Read how it works and the rules first. This isn't just a formality — it matters for your own safety.</div>
+
+    <div class="tos-block">
+      <h3>How it works</h3>
+      <ul>
+        <li>You pick an AI provider (Anthropic/OpenAI/Google), paste in your own API key, and configure your agent's name, tools, tone, and constraints.</li>
+        <li>When you hit "Build Agent," your browser calls that provider's API directly — there is no HOODFACTORY server in between at all.</li>
+        <li>Your agent's config (name, provider, model, system prompt, etc.) is saved automatically in this browser, per wallet address, so it doesn't get lost on refresh or logout.</li>
+        <li>API usage is billed directly to your own provider account, based on the model and usage you generate.</li>
+      </ul>
+    </div>
+
+    <div class="tos-block">
+      <h3>User rules</h3>
+      <ul>
+        <li>Use your own valid, active API key. Do not use a stolen, leaked, or someone else's key.</li>
+        <li>You are fully responsible for the content, use, and output of any agent you build.</li>
+        <li>Building agents for illegal activity, fraud, spam, or anything that violates the relevant AI provider's policies is prohibited.</li>
+        <li>Keep your own API key confidential — don't paste it anywhere public or share it with others.</li>
+      </ul>
+    </div>
+
+    <div class="tos-block tos-warn">
+      <h3>About your API key</h3>
+      <p>The API key you enter is <b>never sent to or stored on HOODFACTORY's servers</b>. API calls go directly from your browser to the provider you choose. The key only lives temporarily in your browser's memory for the current chat session and is never saved with the agent configuration, so you will be asked to enter it again whenever you reopen a saved agent.</p>
+    </div>
+
+    <div class="tos-block tos-warn">
+      <h3>Liability disclaimer</h3>
+      <p>HOODFACTORY functions as a <b>tool provider</b>, not a custodian or storage service for your API key or code/data. Agent configs are stored locally in your own browser, not on our servers — meaning we have no access to or control over them. As such, HOODFACTORY is not liable for any loss of data, agent configuration, API key, provider usage costs/balance, or any other loss arising from use of this Agent Builder, including but not limited to: cleared browser data, a lost or damaged device, misconfiguration, or misuse of your key by a third party due to user negligence.</p>
+    </div>
+
+    <div class="tos-agree">
+      <input type="checkbox" id="tosAgreeCheckbox">
+      <label for="tosAgreeCheckbox">I have read and agree to the process, rules, and liability disclaimer above.</label>
+    </div>
+
+    <div class="tos-actions">
+      <button class="btn" id="tosAgreeBtn" disabled>Agree & Continue</button>
+      <button class="btn ghost" id="tosCancelBtn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<footer>HOODFACTORY — bring your own key, the agent does real work.</footer>
+
+<script>
+  // ---------- Whale Radar tools: definitions + local executor ----------
+  // These wrap your own /api/whale-* endpoints so the model must call them
+  // and read real data before answering, instead of guessing.
+  const WHALE_TOOLS = [
+    {
+      name: 'getWhaleSignal',
+      description: 'Get an accumulation/distribution signal for a token contract: whether its top holders show consistent net-inflow (accumulating) in a recent time window. Call this FIRST when asked about whale activity, accumulation, or "is this token being bought up" for a specific token contract address.',
+      input_schema: {
+        type: 'object',
+        properties: {
+          ca: { type: 'string', description: 'Token contract address, e.g. 0x...' },
+          chainId: { type: 'string', description: 'Blockscout chain ID. Default 4663 if not specified by the user.' },
+          hours: { type: 'string', description: 'Lookback window in hours. Default 24 if not specified.' }
+        },
+        required: ['ca']
+      }
+    },
+    {
+      name: 'getWhaleTransfers',
+      description: 'Get the most recent raw token transfers (from, to, amount, timestamp) for a token contract address. Use this after getWhaleSignal when the user wants to see the actual movements behind a signal, or asks "what transfers happened".',
+      input_schema: {
+        type: 'object',
+        properties: {
+          ca: { type: 'string', description: 'Token contract address, e.g. 0x...' },
+          chainId: { type: 'string', description: 'Blockscout chain ID. Default 4663 if not specified by the user.' },
+          limit: { type: 'string', description: 'Max number of transfers to return. Default 25 if not specified.' }
+        },
+        required: ['ca']
+      }
+    },
+    {
+      name: 'getWhaleHolders',
+      description: 'Get the current top holders list for a token contract address (address + balance, ranked). Use this when the user asks "who holds this token" or wants context on wallet concentration.',
+      input_schema: {
+        type: 'object',
+        properties: {
+          ca: { type: 'string', description: 'Token contract address, e.g. 0x...' },
+          chainId: { type: 'string', description: 'Blockscout chain ID. Default 4663 if not specified by the user.' },
+          limit: { type: 'string', description: 'Max number of holders to return. Default 15 if not specified.' }
+        },
+        required: ['ca']
+      }
+    },
+    {
+      name: 'getContractRiskCheck',
+      description: 'Run a basic risk heuristic on a token contract: whether its source is verified, whether its ABI exposes risky owner-controlled functions (mint, blacklist, pause, etc.), and how concentrated the top holders are. Call this whenever the user asks if a token is "safe", "a rug", "a scam", or before recommending/discussing buying a specific token contract.',
+      input_schema: {
+        type: 'object',
+        properties: {
+          ca: { type: 'string', description: 'Token contract address, e.g. 0x...' },
+          chainId: { type: 'string', description: 'Blockscout chain ID. Default 4663 if not specified by the user.' }
+        },
+        required: ['ca']
+      }
+    },
+    {
+      name: 'getWalletLabels',
+      description: 'Label a list of wallet addresses as Contract, known Exchange/DEX tag, or plain Wallet (EOA). Use this after getWhaleHolders or getWhaleTransfers to figure out which "whale" wallets are actually exchanges/LP contracts (noise) versus real individual wallets worth paying attention to.',
+      input_schema: {
+        type: 'object',
+        properties: {
+          addresses: { type: 'string', description: 'Comma-separated list of wallet addresses to label, e.g. "0xabc...,0xdef..." (max 25 per call).' },
+          chainId: { type: 'string', description: 'Blockscout chain ID. Default 4663 if not specified by the user.' }
+        },
+        required: ['addresses']
+      }
+    }
+  ];
+
+  const WHALE_ENDPOINTS = {
+    getWhaleSignal: '/api/whale-signal',
+    getWhaleTransfers: '/api/whale-transfers',
+    getWhaleHolders: '/api/whale-holders',
+    getContractRiskCheck: '/api/whale-risk',
+    getWalletLabels: '/api/whale-wallet-labels'
+  };
+
+  async function runWhaleTool(name, input){
+    const path = WHALE_ENDPOINTS[name];
+    if(!path) return { error: `Unknown tool: ${name}` };
+    const params = new URLSearchParams();
+    Object.entries(input || {}).forEach(([k, v]) => {
+      if(v !== undefined && v !== null && v !== '') params.set(k, v);
+    });
+    const url = `${path}?${params.toString()}`;
+    try{
+      const res = await fetch(url);
+      const data = await res.json();
+      if(!res.ok) return { error: data?.error || `Request failed with status ${res.status}` };
+      return data;
+    }catch(err){
+      return { error: 'On-chain analysis is temporarily unavailable.' };
+    }
+  }
+
+  // ---------- On-chain tools, built on the HOODFACTORY contracts ----------
+  // The AI only prepares intent. checkBalance runs straight away (read-only);
+  // createToken/swap/send render a CONFIRMATION CARD in chat and execute only
+  // after the user presses the button and signs in their own wallet.
+  const ONCHAIN_TOOLS = [
+    {
+      name: 'createToken',
+      description: 'Create (deploy) a new token through the HOODFACTORY launchpad on Robinhood Chain. Fixed supply 1B (20% configured allocation wallet, 80% permanently locked Token/WETH V3 liquidity, trading live immediately, creation fee 0). The website shows a confirmation card; the USER signs and pays gas. Call when the user asks to create/launch/deploy a token; needs name + ticker.',
+      input_schema: {
+        type: 'object',
+        properties: {
+          name: { type: 'string', description: 'Full token name, e.g. "Factory Hood"' },
+          ticker: { type: 'string', description: 'Token symbol, uppercase, no spaces, e.g. "FHOOD"' }
+        },
+        required: ['name', 'ticker']
+      }
+    },
+    {
+      name: 'checkBalance',
+      description: "Read the user's connected-wallet balances on Robinhood Chain (ETH + tokens). Read-only, executes immediately, no signing. Optional token filter by ticker or 0x address.",
+      input_schema: {
+        type: 'object',
+        properties: {
+          token: { type: 'string', description: 'Optional: ticker or 0x address. Empty = ETH + all launchpad tokens owned.' }
+        }
+      }
+    },
+    {
+      name: 'swapTokens',
+      description: "Prepare a swap on Robinhood Chain (ETH <-> token or token <-> token, Uniswap V3 routing). The website shows a confirmation card; the USER signs. Tokens can be a ticker from the HOODFACTORY market or any 0x token address. 'ETH' = native ETH. Amount is in from_token units.",
+      input_schema: {
+        type: 'object',
+        properties: {
+          from_token: { type: 'string', description: "'ETH', ticker, or 0x address the user pays" },
+          to_token: { type: 'string', description: "'ETH', ticker, or 0x address the user receives" },
+          amount: { type: 'string', description: 'Decimal amount of from_token, e.g. "0.01"' }
+        },
+        required: ['from_token', 'to_token', 'amount']
+      }
+    },
+    {
+      name: 'sendTokens',
+      description: 'Prepare a transfer of ETH or a token to another address on Robinhood Chain. Requires the FULL 0x destination address (42 chars) — if missing or partial, ask the user for it instead of calling this. The website shows the full address on a confirmation card; the USER signs.',
+      input_schema: {
+        type: 'object',
+        properties: {
+          token: { type: 'string', description: "'ETH', ticker, or 0x token address" },
+          amount: { type: 'string', description: 'Decimal amount to send' },
+          to: { type: 'string', description: 'FULL destination address: 0x + 40 hex chars' }
+        },
+        required: ['token', 'amount', 'to']
+      }
+    }
+  ];
+  const ONCHAIN_TOOL_NAMES = new Set(ONCHAIN_TOOLS.map(t => t.name));
+
+  const HOOD = window.HOOD_DEPLOYMENT || {};
+  const hoodChainReady = !!(HOOD.launchpad && HOOD.swapRouter && window.ethers);
+  const hoodRead = window.ethers && HOOD.rpcUrl ? new ethers.JsonRpcProvider(HOOD.rpcUrl) : null;
+  const HOOD_ERC20_ABI = [
+    'function approve(address spender, uint256 value) returns (bool)',
+    'function allowance(address owner, address spender) view returns (uint256)',
+    'function balanceOf(address owner) view returns (uint256)',
+    'function symbol() view returns (string)',
+    'function decimals() view returns (uint8)',
+    'function transfer(address to, uint256 value) returns (bool)'
+  ];
+  const HOOD_LAUNCHPAD_ABI = [
+    'function createCoin(string name, string symbol) returns (address token)',
+    'event CoinCreated(address indexed token, address indexed creator, address indexed pool, string name, string symbol)'
+  ];
+  const HOOD_ROUTER_ABI = [
+    'function swapExactInput(address token, bool buy, uint256 amountIn, uint256 amountOutMinimum, address recipient, uint256 deadline) payable returns (uint256 amountOut)',
+    'function quoteExactInput(address token, bool buy, uint256 amountIn) returns (uint256 amountOut, uint256 platformFee)'
+  ];
+  const HOOD_QUOTER_ABI = [
+    'function quoteExactInputSingle((address tokenIn, address tokenOut, uint256 amountIn, uint24 fee, uint160 sqrtPriceLimitX96) params) returns (uint256 amountOut, uint160 a, uint32 b, uint256 c)',
+    'function quoteExactInput(bytes path, uint256 amountIn) returns (uint256 amountOut, uint160[] a, uint32[] b, uint256 c)'
+  ];
+  const HOOD_ROUTER02_ABI = [
+    'function exactInputSingle((address tokenIn, address tokenOut, uint24 fee, address recipient, uint256 amountIn, uint256 amountOutMinimum, uint160 sqrtPriceLimitX96) params) payable returns (uint256 amountOut)',
+    'function exactInput((bytes path, address recipient, uint256 amountIn, uint256 amountOutMinimum) params) payable returns (uint256 amountOut)',
+    'function unwrapWETH9(uint256 amountMinimum, address recipient) payable',
+    'function multicall(bytes[] data) payable returns (bytes[] results)'
+  ];
+  const HOOD_ADDRESS_THIS = '0x0000000000000000000000000000000000000002';
+  const HOOD_FEE_TIERS = [500, 3000, 10000];
+
+  let hoodMarketTokens = [];
+  (async function loadHoodMarket(){
+    try{
+      const r = await fetch(`/api/tokens-list?chainId=${HOOD.chainId || 4663}`);
+      const d = await r.json();
+      hoodMarketTokens = d.tokens || [];
+    }catch(e){ /* market offline: ticker resolution limited to 0x addresses */ }
+  })();
+
+  const hoodMetaCache = {};
+  async function hoodTokenMeta(addr){
+    const k = addr.toLowerCase();
+    if(hoodMetaCache[k]) return hoodMetaCache[k];
+    const erc = new ethers.Contract(addr, HOOD_ERC20_ABI, hoodRead);
+    let symbol = '???', decimals = 18;
+    try{ symbol = await erc.symbol(); }catch(e){}
+    try{ decimals = Number(await erc.decimals()); }catch(e){}
+    hoodMetaCache[k] = { symbol, decimals };
+    return hoodMetaCache[k];
+  }
+  function hoodResolveAsset(ref){
+    const s = String(ref || '').trim().replace(/^\$/, '');
+    if(!s || /^eth$/i.test(s)) return { kind:'eth', symbol:'ETH' };
+    if(/^0x[0-9a-fA-F]{40}$/.test(s)){
+      const m = hoodMarketTokens.find(t => t.address.toLowerCase() === s.toLowerCase());
+      return { kind:'token', address:s, symbol:m ? m.symbol : null, launchpad: !!m };
+    }
+    const m = hoodMarketTokens.find(t => String(t.symbol).toUpperCase() === s.toUpperCase());
+    if(m) return { kind:'token', address:m.address, symbol:m.symbol, launchpad:true };
+    return { kind:'unknown', ref:s };
+  }
+  function hoodFmt(x){
+    const n = Number(x);
+    if(!isFinite(n)) return '-';
+    if(n >= 1e9) return (n/1e9).toFixed(2)+'B';
+    if(n >= 1e6) return (n/1e6).toFixed(2)+'M';
+    if(n >= 1e3) return (n/1e3).toFixed(2)+'K';
+    return n.toLocaleString('en-US',{maximumFractionDigits:6});
+  }
+  async function hoodPrivyBridge(){
+    if(window.parent!==window && window.parent.hoodPrivy) return window.parent.hoodPrivy;
+    if(window.hoodPrivy) return window.hoodPrivy;
+    await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('Wallet service unavailable.')),10000);window.addEventListener('hood:privy-ready',()=>{clearTimeout(timer);resolve();},{once:true})});
+    return window.hoodPrivy;
+  }
+  async function hoodEnsureChain(){
+    const ethereum=await (await hoodPrivyBridge()).getProvider();
+    try{
+      await ethereum.request({ method:'wallet_switchEthereumChain', params:[{ chainId: HOOD.chainHex }] });
+    }catch(err){
+      if(err && (err.code === 4902 || String(err.message||'').includes('4902'))){
+        await ethereum.request({ method:'wallet_addEthereumChain', params:[{
+          chainId: HOOD.chainHex, chainName: HOOD.chainName,
+          nativeCurrency: { name:'Ether', symbol:'ETH', decimals:18 },
+          rpcUrls: [HOOD.rpcUrl], blockExplorerUrls: [HOOD.explorerUrl]
+        }]});
+      } else { throw err; }
+    }
+    return new ethers.BrowserProvider(ethereum).getSigner();
+  }
+
+  function hoodConfirmCard(rows, btnLabel, onConfirm){
+    const box = document.getElementById('chatBox');
+    const card = document.createElement('div');
+    card.className = 'deploy-card';
+    card.innerHTML = rows.map(([k,v]) =>
+      `<div class="dc-row"${k==='To' ? ' style="flex-direction:column; gap:2px;"' : ''}><span></span><span${k==='To' ? ' style="word-break:break-all;"' : ''}></span></div>`
+    ).join('') + `<button class="btn"></button>`;
+    card.querySelectorAll('.dc-row').forEach((row,i) => {
+      row.querySelector('span:first-child').textContent = rows[i][0];
+      row.querySelector('span:last-child').textContent = rows[i][1];
+    });
+    const btn = card.querySelector('button');
+    btn.textContent = btnLabel;
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      try{ await onConfirm(btn); }
+      catch(err){
+        btn.disabled = false; btn.textContent = btnLabel;
+        addSysMsg(safeAgentUiError(err,'The transaction could not be completed. Please try again.'));
+      }
+    });
+    box.appendChild(card);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  async function hoodQuoteGeneral(tokenIn, tokenOut, amountIn){
+    const quoter = new ethers.Contract(HOOD.quoterV2, HOOD_QUOTER_ABI, hoodRead);
+    let best = null;
+    for(const fee of HOOD_FEE_TIERS){
+      try{
+        const [out] = await quoter.quoteExactInputSingle.staticCall({ tokenIn, tokenOut, amountIn, fee, sqrtPriceLimitX96: 0n });
+        if(out > 0n && (!best || out > best.amountOut)) best = { amountOut: out, fee };
+      }catch(e){}
+    }
+    if(tokenIn.toLowerCase() !== HOOD.weth.toLowerCase() && tokenOut.toLowerCase() !== HOOD.weth.toLowerCase()){
+      for(const feeA of HOOD_FEE_TIERS) for(const feeB of HOOD_FEE_TIERS){
+        try{
+          const path = ethers.solidityPacked(['address','uint24','address','uint24','address'],[tokenIn,feeA,HOOD.weth,feeB,tokenOut]);
+          const [out] = await quoter.quoteExactInput.staticCall(path, amountIn);
+          if(out > 0n && (!best || out > best.amountOut)) best = { amountOut: out, path };
+        }catch(e){}
+      }
+    }
+    return best;
+  }
+
+  async function runOnchainTool(name, input){
+    if(!hoodChainReady) return { error: 'HOODFACTORY contracts are not deployed/configured on this site yet.' };
+    const me = currentWallet;
+    if(!me) return { error: 'No wallet connected.' };
+
+    if(name === 'checkBalance'){
+      try{
+        const lines = { eth: ethers.formatEther(await hoodRead.getBalance(me)) };
+        const asset = hoodResolveAsset(input?.token);
+        if(asset.kind === 'token'){
+          const meta = await hoodTokenMeta(asset.address);
+          const bal = await new ethers.Contract(asset.address, HOOD_ERC20_ABI, hoodRead).balanceOf(me);
+          lines[meta.symbol] = ethers.formatUnits(bal, meta.decimals);
+        } else if(asset.kind === 'unknown' && input?.token){
+          return { error: `Token "${input.token}" not found in the market — ask the user for its 0x address.` };
+        } else {
+          for(const t of hoodMarketTokens.slice(0, 15)){
+            try{
+              const bal = await new ethers.Contract(t.address, HOOD_ERC20_ABI, hoodRead).balanceOf(me);
+              if(bal > 0n) lines[t.symbol] = ethers.formatUnits(bal, 18);
+            }catch(e){}
+          }
+        }
+        return { wallet: me, balances: lines };
+      }catch(err){ return { error: 'The balance could not be loaded.' }; }
+    }
+
+    if(name === 'createToken'){
+      const ticker = String(input?.ticker || '').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,12);
+      const tname = String(input?.name || '').slice(0,48).trim();
+      if(!tname || !ticker) return { error: 'Need both name and ticker.' };
+      hoodConfirmCard(
+        [['Action','CREATE TOKEN'],['Name',tname],['Ticker',ticker],['Supply','1,000,000,000 (fixed)'],['Chain',HOOD.chainName||'Robinhood Chain'],['Cost','gas only']],
+        'CONFIRM & DEPLOY FROM MY WALLET',
+        async (btn) => {
+          const signer = await hoodEnsureChain();
+          const pad = new ethers.Contract(HOOD.launchpad, HOOD_LAUNCHPAD_ABI, signer);
+          btn.textContent = 'DEPLOYING...';
+          const tx = await pad.createCoin(tname, ticker);
+          const rc = await tx.wait();
+          let tokenAddr = null;
+          for(const log of rc.logs){
+            try{ const pl = pad.interface.parseLog(log); if(pl?.name === 'CoinCreated'){ tokenAddr = pl.args.token; break; } }catch(e){}
+          }
+          btn.textContent = 'DEPLOYED ✓';
+          addSysMsg(`Token deployed: ${tname} (${ticker}) — CA ${tokenAddr} · ${HOOD.explorerUrl}/address/${tokenAddr}`);
+          try{ await fetch('/api/tokens-register',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({chainId:String(HOOD.chainId),token:tokenAddr,txHash:tx.hash})}); }catch(e){}
+        }
+      );
+      return { status: 'confirmation_card_shown', note: 'A confirmation card is now visible in the chat. Tell the user to review it and press the confirm button; their wallet will sign and pay gas. Do not claim the token is deployed yet.' };
+    }
+
+    if(name === 'swapTokens'){
+      const from = hoodResolveAsset(input?.from_token);
+      const to = hoodResolveAsset(input?.to_token);
+      const amount = String(input?.amount || '').replace(/,/g,'');
+      if(from.kind === 'unknown' || to.kind === 'unknown')
+        return { error: `Unknown token "${from.kind==='unknown'?from.ref:to.ref}" — ask the user for its 0x contract address.` };
+      if(!/^[0-9]*\.?[0-9]+$/.test(amount)) return { error: 'Invalid amount.' };
+      hoodConfirmCard(
+        [['Action','SWAP'],['You pay',`${amount} ${from.symbol || from.address?.slice(0,10)+'...'}`],['You receive', to.symbol || to.address?.slice(0,10)+'...'],['Slippage','5%']],
+        'CONFIRM SWAP IN MY WALLET',
+        async (btn) => {
+          const signer = await hoodEnsureChain();
+          const useHouse = (from.kind==='eth' && to.launchpad) || (to.kind==='eth' && from.launchpad);
+          if(useHouse){
+            const buy = from.kind === 'eth';
+            const tokenAddr = buy ? to.address : from.address;
+            const router = new ethers.Contract(HOOD.swapRouter, HOOD_ROUTER_ABI, signer);
+            const amt = ethers.parseEther(amount);
+            const [q] = await router.quoteExactInput.staticCall(tokenAddr, buy, amt);
+            if(!buy){
+              const erc = new ethers.Contract(tokenAddr, HOOD_ERC20_ABI, signer);
+              if((await erc.allowance(currentWallet, HOOD.swapRouter)) < amt){
+                btn.textContent = 'APPROVING...';
+                await (await erc.approve(HOOD.swapRouter, amt)).wait();
+              }
+            }
+            btn.textContent = 'SWAPPING...';
+            const tx = await router.swapExactInput(tokenAddr, buy, amt, (q*90n)/100n, currentWallet, Math.floor(Date.now()/1000)+600, buy?{value:amt}:{});
+            await tx.wait();
+            btn.textContent = 'SWAP ✓';
+            addSysMsg(`Swap done — tx ${HOOD.explorerUrl}/tx/${tx.hash}`);
+          } else {
+            const tokenIn = from.kind==='eth' ? HOOD.weth : from.address;
+            const tokenOut = to.kind==='eth' ? HOOD.weth : to.address;
+            const inMeta = from.kind==='eth' ? {decimals:18} : await hoodTokenMeta(tokenIn);
+            const amt = ethers.parseUnits(amount, inMeta.decimals);
+            btn.textContent = 'ROUTING...';
+            const q = await hoodQuoteGeneral(tokenIn, tokenOut, amt);
+            if(!q) throw new Error('No Uniswap V3 liquidity for this pair.');
+            const minOut = (q.amountOut*95n)/100n;
+            if(from.kind !== 'eth'){
+              const erc = new ethers.Contract(tokenIn, HOOD_ERC20_ABI, signer);
+              if((await erc.allowance(currentWallet, HOOD.swapRouter02)) < amt){
+                btn.textContent = 'APPROVING...';
+                await (await erc.approve(HOOD.swapRouter02, amt)).wait();
+              }
+            }
+            btn.textContent = 'SWAPPING...';
+            const router = new ethers.Contract(HOOD.swapRouter02, HOOD_ROUTER02_ABI, signer);
+            const toEth = to.kind === 'eth';
+            const recipient = toEth ? HOOD_ADDRESS_THIS : currentWallet;
+            const value = from.kind === 'eth' ? amt : 0n;
+            const swapData = q.fee !== undefined
+              ? router.interface.encodeFunctionData('exactInputSingle', [{tokenIn,tokenOut,fee:q.fee,recipient,amountIn:amt,amountOutMinimum:minOut,sqrtPriceLimitX96:0n}])
+              : router.interface.encodeFunctionData('exactInput', [{path:q.path,recipient,amountIn:amt,amountOutMinimum:minOut}]);
+            const tx = toEth
+              ? await router.multicall([swapData, router.interface.encodeFunctionData('unwrapWETH9',[minOut,currentWallet])], {value})
+              : await signer.sendTransaction({ to: HOOD.swapRouter02, data: swapData, value });
+            await tx.wait();
+            btn.textContent = 'SWAP ✓';
+            addSysMsg(`Swap done — tx ${HOOD.explorerUrl}/tx/${tx.hash}`);
+          }
+        }
+      );
+      return { status: 'confirmation_card_shown', note: 'A swap confirmation card is visible in the chat. The user must press confirm and sign in their wallet. Do not claim the swap is done yet.' };
+    }
+
+    if(name === 'sendTokens'){
+      const asset = hoodResolveAsset(input?.token);
+      const to = String(input?.to || '').trim();
+      const amount = String(input?.amount || '').replace(/,/g,'');
+      if(asset.kind === 'unknown') return { error: `Unknown token "${input?.token}" — ask for its 0x address.` };
+      if(!/^0x[0-9a-fA-F]{40}$/.test(to)) return { error: 'Destination must be a FULL 0x address (42 chars). Ask the user for it.' };
+      if(!/^[0-9]*\.?[0-9]+$/.test(amount)) return { error: 'Invalid amount.' };
+      hoodConfirmCard(
+        [['Action','SEND — check the address!'],['Asset', asset.symbol || asset.address],['Amount', amount],['To', to]],
+        'CONFIRM SEND IN MY WALLET',
+        async (btn) => {
+          const signer = await hoodEnsureChain();
+          btn.textContent = 'SENDING...';
+          let tx;
+          if(asset.kind === 'eth'){
+            tx = await signer.sendTransaction({ to, value: ethers.parseEther(amount) });
+          } else {
+            const meta = await hoodTokenMeta(asset.address);
+            tx = await new ethers.Contract(asset.address, HOOD_ERC20_ABI, signer).transfer(to, ethers.parseUnits(amount, meta.decimals));
+          }
+          await tx.wait();
+          btn.textContent = 'SENT ✓';
+          addSysMsg(`Sent ${amount} ${asset.symbol || ''} to ${to} — tx ${HOOD.explorerUrl}/tx/${tx.hash}`);
+        }
+      );
+      return { status: 'confirmation_card_shown', note: 'A send confirmation card showing the full destination address is visible. The user must review and confirm in their wallet. Do not claim it is sent yet.' };
+    }
+
+    return { error: `Unknown on-chain tool: ${name}` };
+  }
+
+  // Combined dispatcher: whale-radar (fetch API) or on-chain (our own contracts).
+  function isAgentTool(name){ return !!WHALE_ENDPOINTS[name] || ONCHAIN_TOOL_NAMES.has(name); }
+  async function runAgentTool(name, input){
+    return ONCHAIN_TOOL_NAMES.has(name) ? runOnchainTool(name, input) : runWhaleTool(name, input);
+  }
+
+  const PROVIDERS = {
+    anthropic: {
+      label: 'Anthropic (Claude)',
+      keyPlaceholder: 'sk-ant-api03-...',
+      keyHint: 'Get a key at console.anthropic.com/settings/keys. Uses the official direct-browser-access header — no proxy needed.',
+      keyPrefixCheck: k => k.startsWith('sk-ant-'),
+      docsUrl: 'https://docs.claude.com/en/api/overview',
+      docsLabel: 'docs.claude.com',
+      models: [
+        { id: 'claude-sonnet-5', label: 'Claude Sonnet 5 (balanced, recommended)' },
+        { id: 'claude-opus-4-8', label: 'Claude Opus 4.8 (most capable)' },
+        { id: 'claude-haiku-4-5-20251001', label: 'Claude Haiku 4.5 (fastest, cheapest)' }
+      ],
+      supportsWebSearch: true,
+      supportsWhaleTools: true,
+      supportsOnchainTools: true,
+      webSearchDesc: 'The agent can search the internet in real time while answering.',
+      whaleToolsDesc: 'The agent can call your whale-radar API before answering: signal, transfers, holders, a contract risk check (verified source, risky ABI functions, holder concentration), and wallet labeling (contract vs exchange vs plain wallet). Real on-chain data, not guesses.',
+      async call({ apiKey, model, systemPrompt, history, useWebSearch, useWhaleTools, useOnchainTools }){
+        const tools = [];
+        if(useWebSearch) tools.push({ type: 'web_search_20250305', name: 'web_search' });
+        if(useWhaleTools) tools.push(...WHALE_TOOLS);
+        if(useOnchainTools) tools.push(...ONCHAIN_TOOLS);
+
+        const messages = [...history];
+        const historyAppend = [];
+        const MAX_STEPS = 6; // safety cap: signal -> transfers -> holders -> synthesis, plus headroom
+
+        for(let step = 0; step < MAX_STEPS; step++){
+          const body = { model, max_tokens: 1024, system: systemPrompt, messages };
+          if(tools.length) body.tools = tools;
+
+          const res = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+              'x-api-key': apiKey,
+              'anthropic-version': '2023-06-01',
+              'content-type': 'application/json',
+              'anthropic-dangerous-direct-browser-access': 'true'
+            },
+            body: JSON.stringify(body)
+          });
+          const data = await res.json();
+          if(!res.ok) return { ok:false, status: res.status, message: data?.error?.message || res.status };
+
+          const assistantTurn = { role: 'assistant', content: data.content };
+          messages.push(assistantTurn);
+          historyAppend.push(assistantTurn);
+
+          // Only client-side tools (whale radar + on-chain) need an answer here —
+          // Anthropic's own web_search tool is resolved server-side and won't
+          // show up as an unanswered tool_use needing a follow-up request.
+          const pendingWhaleCalls = (data.content || []).filter(
+            b => b.type === 'tool_use' && isAgentTool(b.name)
+          );
+
+          if(data.stop_reason !== 'tool_use' || pendingWhaleCalls.length === 0){
+            const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n\n');
+            return { ok:true, text: text || '(agent returned no text)', historyAppend };
+          }
+
+          const toolResults = [];
+          for(const call of pendingWhaleCalls){
+            const result = await runAgentTool(call.name, call.input);
+            toolResults.push({ type: 'tool_result', tool_use_id: call.id, content: JSON.stringify(result) });
+          }
+          const toolResultTurn = { role: 'user', content: toolResults };
+          messages.push(toolResultTurn);
+          historyAppend.push(toolResultTurn);
+        }
+
+        return { ok:true, text:'(Agent stopped after too many tool calls in one turn — try asking again, maybe more specifically.)', historyAppend };
+      }
+    },
+    openai: {
+      label: 'OpenAI (GPT)',
+      keyPlaceholder: 'sk-...',
+      keyHint: 'Get a key at platform.openai.com/api-keys. Note: OpenAI does not officially document browser CORS support — this usually works, but if calls get blocked, switch to Anthropic or Google instead.',
+      keyPrefixCheck: k => k.startsWith('sk-'),
+      docsUrl: 'https://platform.openai.com/docs/models',
+      docsLabel: 'platform.openai.com/docs',
+      models: [
+        { id: 'gpt-5.1', label: 'GPT-5.1 (flagship, recommended)' },
+        { id: 'gpt-5-mini', label: 'GPT-5 mini (balanced, cheaper)' },
+        { id: 'gpt-5-nano', label: 'GPT-5 nano (fastest, cheapest)' }
+      ],
+      supportsWebSearch: false,
+      supportsWhaleTools: true,
+      supportsOnchainTools: true,
+      webSearchDesc: 'Not available for OpenAI via this builder yet (needs the Responses API rather than Chat Completions).',
+      whaleToolsDesc: 'The agent can call your whale-radar API before answering: signal, transfers, holders, a contract risk check (verified source, risky ABI functions, holder concentration), and wallet labeling (contract vs exchange vs plain wallet). Real on-chain data, not guesses.',
+      async call({ apiKey, model, systemPrompt, history, useWhaleTools, useOnchainTools }){
+        const customTools = [...(useWhaleTools ? WHALE_TOOLS : []), ...(useOnchainTools ? ONCHAIN_TOOLS : [])];
+        const tools = customTools.length
+          ? customTools.map(t => ({ type: 'function', function: { name: t.name, description: t.description, parameters: t.input_schema } }))
+          : undefined;
+
+        const messages = [{ role: 'system', content: systemPrompt }, ...history];
+        const historyAppend = [];
+        const MAX_STEPS = 6;
+
+        for(let step = 0; step < MAX_STEPS; step++){
+          let res, data;
+          try{
+            // Model GPT-5.x memakai max_completion_tokens (max_tokens ditolak).
+            const body = { model, messages, max_completion_tokens: 1024 };
+            if(tools) body.tools = tools;
+            res = await fetch('https://api.openai.com/v1/chat/completions', {
+              method: 'POST',
+              headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+              body: JSON.stringify(body)
+            });
+            data = await res.json();
+          }catch(err){
+            return { ok:false, status:'network', message: 'Could not reach api.openai.com from the browser. OpenAI does not guarantee CORS support for this endpoint — try Anthropic or Google instead, or add a small backend proxy.' };
+          }
+          if(!res.ok) return { ok:false, status: res.status, message: data?.error?.message || res.status };
+
+          const msg = data.choices?.[0]?.message || {};
+          const assistantTurn = { role: 'assistant', content: msg.content ?? null, tool_calls: msg.tool_calls };
+          messages.push(assistantTurn);
+          historyAppend.push(assistantTurn);
+
+          const pendingWhaleCalls = (msg.tool_calls || []).filter(tc => isAgentTool(tc.function?.name));
+          if(pendingWhaleCalls.length === 0){
+            const text = msg.content || '(agent returned no text)';
+            return { ok:true, text, historyAppend };
+          }
+
+          for(const tc of pendingWhaleCalls){
+            let args = {};
+            try{ args = JSON.parse(tc.function.arguments || '{}'); }catch(err){ /* leave empty */ }
+            const result = await runAgentTool(tc.function.name, args);
+            const toolTurn = { role: 'tool', tool_call_id: tc.id, content: JSON.stringify(result) };
+            messages.push(toolTurn);
+            historyAppend.push(toolTurn);
+          }
+        }
+        return { ok:true, text:'(Agent stopped after too many tool calls in one turn — try asking again.)', historyAppend };
+      }
+    },
+    google: {
+      label: 'Google (Gemini)',
+      keyPlaceholder: 'AIza...',
+      keyHint: 'Get a key at aistudio.google.com/app/apikey. Calls go straight to generativelanguage.googleapis.com.',
+      keyPrefixCheck: k => k.length > 10,
+      docsUrl: 'https://ai.google.dev/gemini-api/docs',
+      docsLabel: 'ai.google.dev/gemini-api',
+      models: [
+        { id: 'gemini-flash-latest', label: 'Gemini Flash — latest (fast, recommended)' },
+        { id: 'gemini-pro-latest', label: 'Gemini Pro — latest (most capable)' },
+        { id: 'gemini-flash-lite-latest', label: 'Gemini Flash Lite — latest (cheapest)' }
+      ],
+      supportsWebSearch: false,
+      supportsWhaleTools: true,
+      supportsOnchainTools: true,
+      webSearchDesc: 'Not wired up for Gemini in this builder yet (needs the googleSearch grounding tool).',
+      whaleToolsDesc: 'The agent can call your whale-radar API before answering: signal, transfers, holders, a contract risk check (verified source, risky ABI functions, holder concentration), and wallet labeling (contract vs exchange vs plain wallet). Real on-chain data, not guesses.',
+      async call({ apiKey, model, systemPrompt, history, useWhaleTools, useOnchainTools }){
+        const customTools = [...(useWhaleTools ? WHALE_TOOLS : []), ...(useOnchainTools ? ONCHAIN_TOOLS : [])];
+        const tools = customTools.length
+          ? [{ functionDeclarations: customTools.map(t => ({ name: t.name, description: t.description, parameters: t.input_schema })) }]
+          : undefined;
+
+        // History entries coming from this provider's own tool-loop turns are
+        // already in Gemini's native {role, parts} shape (they have `.parts`).
+        // Plain user turns from the chat box are the generic {role, content}
+        // shape and need converting to a Gemini content object.
+        const toGeminiContent = (turn) => turn.parts
+          ? turn
+          : { role: turn.role === 'assistant' ? 'model' : 'user', parts: [{ text: typeof turn.content === 'string' ? turn.content : JSON.stringify(turn.content) }] };
+
+        const contents = history.map(toGeminiContent);
+        const historyAppend = [];
+        const MAX_STEPS = 6;
+
+        for(let step = 0; step < MAX_STEPS; step++){
+          const body = { contents, systemInstruction: { parts: [{ text: systemPrompt }] } };
+          if(tools) body.tools = tools;
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+            method: 'POST',
+            headers: { 'x-goog-api-key': apiKey, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+          const data = await res.json();
+          if(!res.ok) return { ok:false, status: res.status, message: data?.error?.message || res.status };
+
+          const parts = data?.candidates?.[0]?.content?.parts || [];
+          const modelTurn = { role: 'model', parts };
+          contents.push(modelTurn);
+          historyAppend.push(modelTurn);
+
+          const pendingWhaleCalls = parts.filter(p => p.functionCall && isAgentTool(p.functionCall.name));
+          if(pendingWhaleCalls.length === 0){
+            const text = parts.filter(p => p.text).map(p => p.text).join('\n\n') || '(agent returned no text)';
+            return { ok:true, text, historyAppend };
+          }
+
+          const responseParts = [];
+          for(const fc of pendingWhaleCalls){
+            const result = await runAgentTool(fc.functionCall.name, fc.functionCall.args);
+            responseParts.push({ functionResponse: { name: fc.functionCall.name, response: result } });
+          }
+          const functionTurn = { role: 'function', parts: responseParts };
+          contents.push(functionTurn);
+          historyAppend.push(functionTurn);
+        }
+        return { ok:true, text:'(Agent stopped after too many tool calls in one turn — try asking again.)', historyAppend };
+      }
+    }
+  };
+
+  let selectedProvider = 'anthropic';
+  let agent = null;
+  let currentWallet = null;
+  let pendingReopenAgent = null;
+
+  // ---------- Per-wallet persistence (config only — never the API key) ----------
+  function agentsStorageKey(addr){ return 'hoodfactory_agents_' + String(addr).toLowerCase(); }
+
+  function loadAgentsForWallet(addr){
+    if(!addr) return [];
+    try{
+      const raw = sessionStorage.getItem(agentsStorageKey(addr));
+      return raw ? JSON.parse(raw) : [];
+    }catch(err){ return []; }
+  }
+  function saveAgentsForWallet(addr, list){
+    if(!addr) return;
+    try{ sessionStorage.setItem(agentsStorageKey(addr), JSON.stringify(list)); }
+    catch(err){ console.warn('Could not save agents locally:', err); }
+  }
+  function addSavedAgent(addr, agentCfg){
+    const list = loadAgentsForWallet(addr);
+    list.unshift(agentCfg);
+    saveAgentsForWallet(addr, list);
+  }
+  function deleteSavedAgent(addr, id){
+    saveAgentsForWallet(addr, loadAgentsForWallet(addr).filter(a => a.id !== id));
+  }
+  function makeAgentId(){
+    return (crypto.randomUUID ? crypto.randomUUID() : 'agent_' + Date.now() + '_' + Math.random().toString(36).slice(2));
+  }
+  function escapeHtml(s){
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+  function safeAgentUiError(err, fallback='Something went wrong. Please try again.'){
+    const raw=[err?.shortMessage,err?.reason,err?.message,typeof err==='string'?err:''].filter(Boolean).join(' ').toLowerCase();
+    if(err?.code===4001||/rejected|denied|cancelled/.test(raw)) return 'Request cancelled in your wallet.';
+    if(/insufficient funds|insufficient balance/.test(raw)) return 'Your wallet does not have enough funds for this transaction and its network fee.';
+    if(/network|rpc|coalesce|json-rpc|failed to fetch|timeout|connection|gateway/.test(raw)) return 'The network is temporarily unavailable. Please try again shortly.';
+    if(/401|403|unauthorized|invalid api key|key rejected/.test(raw)) return 'The provider did not accept this API key. Verify the key and try again.';
+    if(/429|quota|rate limit/.test(raw)) return 'The provider usage limit has been reached. Review your provider account and try again later.';
+    return fallback;
+  }
+
+  let confirmResolver = null;
+  function closeConfirmModal(result=false){
+    const modal = document.getElementById('confirmModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = modal.dataset.previousOverflow || '';
+    const resolve = confirmResolver;
+    confirmResolver = null;
+    if(resolve) resolve(result);
+  }
+  function openConfirmModal({title='CONFIRM ACTION', message='', note='', acceptLabel='Confirm', cancelLabel='Cancel'}={}){
+    if(confirmResolver) closeConfirmModal(false);
+    const modal = document.getElementById('confirmModal');
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmMessage').innerHTML = message;
+    const noteEl = document.getElementById('confirmNote');
+    noteEl.textContent = note;
+    noteEl.style.display = note ? 'block' : 'none';
+    document.getElementById('confirmAcceptBtn').textContent = acceptLabel;
+    document.getElementById('confirmCancelBtn').textContent = cancelLabel;
+    modal.dataset.previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    modal.classList.add('show');
+    requestAnimationFrame(() => document.getElementById('confirmCancelBtn').focus());
+    return new Promise(resolve => { confirmResolver = resolve; });
+  }
+  document.getElementById('confirmCancelBtn').addEventListener('click', () => closeConfirmModal(false));
+  document.getElementById('confirmAcceptBtn').addEventListener('click', () => closeConfirmModal(true));
+  document.getElementById('confirmModal').addEventListener('click', event => {
+    if(event.target.id === 'confirmModal') closeConfirmModal(false);
+  });
+  document.addEventListener('keydown', event => {
+    if(event.key === 'Escape' && document.getElementById('confirmModal').classList.contains('show')) closeConfirmModal(false);
+  });
+
+  function enabledToolsLabel(cfg){
+    const tools = [];
+    if(cfg.useWebSearch) tools.push('Web Search');
+    if(cfg.useWhaleTools) tools.push('Whale Radar');
+    if(cfg.useOnchainTools) tools.push('On-chain');
+    return tools.length ? tools.join(' + ') : 'No tools enabled';
+  }
+
+  function renderDashboard(){
+    const grid = document.getElementById('agentsGrid');
+    const list = loadAgentsForWallet(currentWallet);
+    // No agent yet -> show the options (subscribe / BYOK). After creating one -> My Agents.
+    const hasAgents = list.length > 0;
+    document.getElementById('agentOptions').style.display = hasAgents ? 'none' : 'block';
+    document.getElementById('myAgentsBlock').style.display = hasAgents ? 'block' : 'none';
+    grid.innerHTML = '';
+    if(!hasAgents){ refreshPlanPrice(); return; }
+    list.forEach(a => {
+      const p = PROVIDERS[a.providerKey];
+      const card = document.createElement('div');
+      card.className = 'card agent-card';
+      const dateStr = new Date(a.createdAt).toLocaleDateString();
+      card.innerHTML = `
+        <div class="agent-card-name">${escapeHtml(a.name)}</div>
+        <div class="agent-card-meta">${escapeHtml(p ? p.label : a.providerKey)} · ${escapeHtml(enabledToolsLabel(a))}</div>
+        <div class="agent-card-meta" style="opacity:.7;">Created ${dateStr}</div>
+        <div class="agent-card-actions">
+          <button class="btn agent-chat-btn" data-id="${a.id}">Chat</button>
+          <button class="icon-btn agent-del-btn" data-id="${a.id}">Delete</button>
+        </div>`;
+      grid.appendChild(card);
+    });
+    grid.querySelectorAll('.agent-chat-btn').forEach(btn => {
+      btn.addEventListener('click', () => openKeyPrompt(btn.dataset.id));
+    });
+    grid.querySelectorAll('.agent-del-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const savedAgent = list.find(agentItem => agentItem.id === btn.dataset.id);
+        const shouldDelete = await openConfirmModal({
+          title:'DELETE AGENT?',
+          message:`Remove <strong>${escapeHtml(savedAgent?.name || 'this agent')}</strong> from My Agents?`,
+          note:'Its locally saved configuration will be permanently removed from this browser. Your provider account and API key are not affected.',
+          acceptLabel:'Delete Agent',
+          cancelLabel:'Keep Agent'
+        });
+        if(shouldDelete){
+          deleteSavedAgent(currentWallet, btn.dataset.id);
+          renderDashboard();
+        }
+      });
+    });
+  }
+
+  function showView(view){
+    document.getElementById('dashboardSection').style.display = view === 'dashboard' ? 'block' : 'none';
+    document.getElementById('formSection').style.display = view === 'form' ? 'block' : 'none';
+    document.getElementById('chatSection').style.display = view === 'chat' ? 'block' : 'none';
+    document.getElementById('heroIntro').style.display = view === 'form' ? 'none' : 'block';
+    document.getElementById('heroBuild').style.display = view === 'form' ? 'block' : 'none';
+    document.querySelector('.step-rail').style.display = view === 'dashboard' ? 'none' : 'flex';
+    document.getElementById('backToDashboardBtn').style.display = view === 'form' ? 'inline-block' : 'none';
+  }
+
+  function resetFormSteps(){
+    document.getElementById('stepPill1').classList.add('active');
+    document.getElementById('stepPill1').classList.remove('done');
+    document.getElementById('stepPill2').classList.remove('done');
+    document.getElementById('stepPill2').classList.remove('active');
+    document.getElementById('stepPill3').classList.remove('done');
+    document.getElementById('stepPill3').classList.remove('active');
+    agent = null;
+  }
+
+  // Called by the wallet-gate script once a wallet address is known
+  function onWalletConnected(address){
+    currentWallet = address;
+    renderDashboard();
+    showView('dashboard');
+  }
+  function onWalletDisconnected(){
+    currentWallet = null;
+    faWalletAuth = null;
+  }
+
+  function goToCreateAgent(){
+    openTosModal('gate');
+  }
+  document.getElementById('newAgentBtn').addEventListener('click', goToCreateAgent);
+  document.getElementById('optCreateBtn').addEventListener('click', goToCreateAgent);
+
+  // Subscribe button on the options block reuses the same on-chain payment flow
+  // as the limit modal (defined further below).
+  document.getElementById('optSubscribeBtn').addEventListener('click', () => runSubscribe(document.getElementById('optSubscribeBtn')));
+
+  async function refreshPlanPrice(){
+    try{
+      const cfg = await (await fetch('/api/agent-subscribe')).json();
+      window.__hoodPlan = cfg;
+      const el = document.getElementById('optSubPrice');
+      if(el) el.textContent = cfg.priceEth ? `(${cfg.priceEth} ETH)` : '';
+    }catch(e){}
+  }
+
+  // ---------- Terms & disclaimer modal (must be accepted once before building an agent) ----------
+  const TOS_KEY = 'hoodfactory_agent_builder_tos_accepted_v1';
+  function hasTosAccepted(){
+    try{ return localStorage.getItem(TOS_KEY) === 'yes'; }catch(err){ return false; }
+  }
+  let tosMode = 'gate';
+  function openTosModal(mode){
+    tosMode = mode;
+    const checkbox = document.getElementById('tosAgreeCheckbox');
+    const agreeBtn = document.getElementById('tosAgreeBtn');
+    if(mode === 'view' && hasTosAccepted()){
+      checkbox.checked = true;
+      agreeBtn.disabled = false;
+      agreeBtn.textContent = 'Close';
+    } else {
+      checkbox.checked = false;
+      agreeBtn.disabled = true;
+      agreeBtn.textContent = 'Agree & Continue';
+    }
+    document.getElementById('tosModal').classList.add('show');
+  }
+  function closeTosModal(){
+    document.getElementById('tosModal').classList.remove('show');
+  }
+  document.getElementById('tosAgreeCheckbox').addEventListener('change', (e) => {
+    document.getElementById('tosAgreeBtn').disabled = !e.target.checked;
+  });
+  document.getElementById('tosAgreeBtn').addEventListener('click', () => {
+    if(document.getElementById('tosAgreeCheckbox').checked){
+      try{ localStorage.setItem(TOS_KEY, 'yes'); }catch(err){ /* ignore */ }
+    }
+    closeTosModal();
+    if(tosMode === 'gate'){
+      resetFormSteps();
+      showView('form');
+    }
+  });
+  document.getElementById('tosCancelBtn').addEventListener('click', closeTosModal);
+  document.getElementById('navMyAgents').addEventListener('click', (e) => {
+    e.preventDefault();
+    renderDashboard();
+    showView('dashboard');
+  });
+  document.getElementById('backToDashboardBtn').addEventListener('click', (e) => {
+    e.preventDefault();
+    renderDashboard();
+    showView('dashboard');
+  });
+  document.getElementById('backToDashboardFromChatBtn').addEventListener('click', () => {
+    agent = null;
+    renderDashboard();
+    showView('dashboard');
+  });
+
+  // ---------- Reopening a saved agent: ask for the API key again (never stored) ----------
+  function openKeyPrompt(id){
+    const cfg = loadAgentsForWallet(currentWallet).find(a => a.id === id);
+    if(!cfg) return;
+    pendingReopenAgent = cfg;
+    const provider = PROVIDERS[cfg.providerKey];
+    document.getElementById('keyPromptAgentLabel').textContent = `${cfg.name} · ${provider ? provider.label : cfg.providerKey}`;
+    const input = document.getElementById('keyPromptInput');
+    input.value = '';
+    input.placeholder = provider ? provider.keyPlaceholder : 'API key';
+    document.getElementById('keyPromptErr').classList.remove('show');
+    document.getElementById('keyPromptModal').classList.add('show');
+    input.focus();
+  }
+  document.getElementById('keyPromptCancelBtn').addEventListener('click', () => {
+    document.getElementById('keyPromptModal').classList.remove('show');
+    pendingReopenAgent = null;
+  });
+  document.getElementById('keyPromptInput').addEventListener('keydown', (e) => {
+    if(e.key === 'Enter') document.getElementById('keyPromptStartBtn').click();
+  });
+  document.getElementById('keyPromptStartBtn').addEventListener('click', async () => {
+    if(!pendingReopenAgent) return;
+    const cfg = pendingReopenAgent;
+    const provider = PROVIDERS[cfg.providerKey];
+    const key = document.getElementById('keyPromptInput').value.trim();
+    if(!key || (provider && !provider.keyPrefixCheck(key))){
+      document.getElementById('keyPromptErr').classList.add('show');
+      return;
+    }
+    document.getElementById('keyPromptModal').classList.remove('show');
+    pendingReopenAgent = null;
+
+    agent = {
+      name: cfg.name, apiKey: key, model: cfg.model, providerKey: cfg.providerKey,
+      useWebSearch: cfg.useWebSearch, useWhaleTools: cfg.useWhaleTools,
+      useOnchainTools: cfg.useOnchainTools,
+      systemPrompt: cfg.systemPrompt, history: []
+    };
+    showView('chat');
+    document.getElementById('chatAgentName').textContent = cfg.name.toUpperCase() + ' · ' + (provider ? provider.label.toUpperCase() : cfg.providerKey.toUpperCase());
+    document.getElementById('stepPill1').classList.add('done'); document.getElementById('stepPill1').classList.remove('active');
+    document.getElementById('stepPill2').classList.add('done');
+    document.getElementById('stepPill3').classList.add('active');
+    document.getElementById('chatBox').innerHTML = '';
+    addSysMsg(`Agent reloaded from My Agents. Contacting ${provider ? provider.label : cfg.providerKey}...`);
+    await sendToAgent('Introduce yourself briefly based on your task and tone, then ask what you can help with.', true);
+  });
+
+  const providerGrid = document.getElementById('providerGrid');
+  const apiKeyInput = document.getElementById('apiKeyInput');
+  const modelSelect = document.getElementById('modelSelect');
+  const providerHint = document.getElementById('providerHint');
+  const keyHint = document.getElementById('keyHint');
+  const modelDocsLink = document.getElementById('modelDocsLink');
+  const webSearchRow = document.getElementById('webSearchRow');
+  const webSearchToggle = document.getElementById('webSearchToggle');
+  const webSearchDesc = document.getElementById('webSearchDesc');
+  const whaleToolsRow = document.getElementById('whaleToolsRow');
+  const whaleToolsToggle = document.getElementById('whaleToolsToggle');
+  const whaleToolsDesc = document.getElementById('whaleToolsDesc');
+
+  function renderProvider(){
+    const p = PROVIDERS[selectedProvider];
+    apiKeyInput.placeholder = p.keyPlaceholder;
+    keyHint.textContent = p.keyHint;
+    providerHint.textContent = '';
+    modelSelect.innerHTML = p.models.map(m => `<option value="${m.id}">${m.label}</option>`).join('');
+    modelDocsLink.innerHTML = `<a href="${p.docsUrl}" target="_blank" style="color:var(--acid);">${p.docsLabel}</a>`;
+    webSearchDesc.textContent = p.webSearchDesc;
+    webSearchToggle.disabled = !p.supportsWebSearch;
+    webSearchToggle.checked = false;
+    webSearchRow.classList.toggle('disabled', !p.supportsWebSearch);
+
+    whaleToolsDesc.textContent = p.whaleToolsDesc || '';
+    whaleToolsToggle.disabled = !p.supportsWhaleTools;
+    whaleToolsToggle.checked = !!p.supportsWhaleTools; // on by default wherever it actually works
+    whaleToolsRow.classList.toggle('disabled', !p.supportsWhaleTools);
+
+    const onchainToggle = document.getElementById('onchainToolsToggle');
+    const onchainRow = document.getElementById('onchainToolsRow');
+    onchainToggle.disabled = !p.supportsOnchainTools;
+    onchainToggle.checked = !!p.supportsOnchainTools;
+    onchainRow.classList.toggle('disabled', !p.supportsOnchainTools);
+  }
+
+  providerGrid.querySelectorAll('.provider-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      providerGrid.querySelectorAll('.provider-opt').forEach(o => o.classList.remove('sel'));
+      opt.classList.add('sel');
+      selectedProvider = opt.dataset.provider;
+      renderProvider();
+    });
+  });
+  renderProvider();
+
+  document.getElementById('toggleKeyBtn').addEventListener('click', () => {
+    const showing = apiKeyInput.type === 'text';
+    apiKeyInput.type = showing ? 'password' : 'text';
+    document.getElementById('toggleKeyBtn').textContent = showing ? 'Show' : 'Hide';
+  });
+
+  function buildSystemPrompt(cfg){
+    let prompt = `You are an AI agent named "${cfg.name}", assembled through HOODFACTORY, a launchpad + whale-tracking platform on Robinhood Chain.\n`;
+    prompt += `Act as a capable general-purpose assistant. Your available capabilities are determined only by the tools enabled below. Never claim to have or use a tool that is not enabled.\n`;
+    prompt += `Your tone of voice: ${cfg.tone}.\n`;
+    if(cfg.useWebSearch){
+      prompt += `You have live web search. Use it when current or externally verifiable information is needed, and distinguish sourced facts from your own analysis.\n`;
+    }
+    if(cfg.useWhaleTools !== false){
+      prompt += `You have whale-radar tools (signal, transfers, holders, contract risk check, wallet labels). When the conversation touches a specific token contract address, use them to ground your answer in real on-chain data instead of guessing.\n`;
+    }
+    if(cfg.useOnchainTools){
+      prompt += `You also have on-chain tools on the HOODFACTORY contracts (Robinhood Chain): createToken, checkBalance, swapTokens, sendTokens. You only PREPARE actions — every transaction shows a confirmation card and is signed by the user's own wallet; you never hold funds. checkBalance executes immediately (read-only). For sendTokens, always require the FULL 0x destination address; never guess or complete an address. Never claim a transaction is done until the tool/user confirms it. Not financial advice; creating a token does not give it value.\n`;
+    }
+    if(cfg.constraints) prompt += `Constraints you must follow: ${cfg.constraints}.\n`;
+    prompt += `Always reply in the language the user writes in. Keep answers concise and clear unless more detail is requested.`;
+    return prompt;
+  }
+
+  function showErr(msg){ const el = document.getElementById('formErr'); el.textContent = msg; el.classList.add('show'); }
+  function clearErr(){ document.getElementById('formErr').classList.remove('show'); }
+
+  document.getElementById('assembleBtn').addEventListener('click', async () => {
+    clearErr();
+    const provider = PROVIDERS[selectedProvider];
+    const apiKey = apiKeyInput.value.trim();
+    const model = modelSelect.value;
+    const name = document.getElementById('agentNameInput').value.trim() || 'Unnamed Agent';
+    const tone = document.getElementById('toneSelect').value;
+    const constraints = document.getElementById('constraintsInput').value.trim();
+    const useWebSearch = webSearchToggle.checked;
+    const useWhaleTools = whaleToolsToggle.checked;
+    const useOnchainTools = document.getElementById('onchainToolsToggle').checked;
+
+    if(!apiKey || !provider.keyPrefixCheck(apiKey)){
+      showErr(`Enter a valid API key for ${provider.label}.`);
+      return;
+    }
+
+    const cfg = { name, tone, constraints, useWebSearch, useWhaleTools, useOnchainTools };
+    agent = {
+      name, apiKey, model, providerKey: selectedProvider, useWebSearch, useWhaleTools, useOnchainTools,
+      systemPrompt: buildSystemPrompt(cfg), history: []
+    };
+
+    // Save the config (name, provider, model, prompt, etc.) so it survives refresh/logout.
+    // The API key itself is deliberately NOT saved — it's re-entered from the dashboard each time.
+    addSavedAgent(currentWallet, {
+      id: makeAgentId(), name, providerKey: selectedProvider, model,
+      tone, constraints, useWebSearch, useWhaleTools, useOnchainTools,
+      systemPrompt: agent.systemPrompt, createdAt: Date.now()
+    });
+
+    showView('chat');
+    document.getElementById('chatAgentName').textContent = name.toUpperCase() + ' · ' + provider.label.toUpperCase();
+    document.getElementById('stepPill1').classList.add('done');
+    document.getElementById('stepPill1').classList.remove('active');
+    document.getElementById('stepPill2').classList.add('done');
+    document.getElementById('stepPill3').classList.add('active');
+
+    document.getElementById('chatBox').innerHTML = '';
+    addSysMsg('Agent assembled. Preparing the first response...');
+    await sendToAgent('Introduce yourself briefly based on your task and tone, then ask what you can help with.', true);
+  });
+
+  document.getElementById('rebuildBtn').addEventListener('click', () => {
+    resetFormSteps();
+    showView('form');
+  });
+
+  function addMsg(role, text){
+    const box = document.getElementById('chatBox');
+    const div = document.createElement('div');
+    div.className = 'msg ' + role;
+    div.textContent = text;
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+    return div;
+  }
+  function addSysMsg(text){
+    const box = document.getElementById('chatBox');
+    const div = document.createElement('div');
+    div.className = 'msg sys';
+    div.textContent = text;
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  async function sendToAgent(userText, isOpener){
+    if(!isOpener) addMsg('user', userText);
+    agent.history.push({ role: 'user', content: userText });
+
+    const box = document.getElementById('chatBox');
+    const typingEl = document.createElement('div');
+    typingEl.className = 'typing';
+    typingEl.textContent = agent.name + ' is typing...';
+    box.appendChild(typingEl);
+    box.scrollTop = box.scrollHeight;
+
+    const sendBtn = document.getElementById('sendBtn');
+    sendBtn.disabled = true;
+
+    const provider = PROVIDERS[agent.providerKey];
+    try{
+      const result = await provider.call({
+        apiKey: agent.apiKey, model: agent.model, systemPrompt: agent.systemPrompt,
+        history: agent.history, useWebSearch: agent.useWebSearch, useWhaleTools: agent.useWhaleTools,
+        useOnchainTools: agent.useOnchainTools
+      });
+      typingEl.remove();
+
+      if(!result.ok){
+        if(result.status === 401 || result.status === 403){
+          addSysMsg('API key rejected. Double-check your key in the provider dashboard.');
+        } else if(result.status === 429){
+          addSysMsg('Rate limit or quota reached on your API key.');
+        } else {
+          addSysMsg('The provider could not complete this request. Please try again.');
+        }
+        agent.history.pop();
+        return;
+      }
+
+      addMsg('agent', result.text);
+      // Providers that only ever produce one assistant turn (OpenAI/Gemini
+      // today) return `assistantTurn`; the Anthropic tool-loop can produce
+      // several turns (assistant tool_use -> user tool_result -> ... ->
+      // assistant text), returned as `historyAppend`. Push whichever exists
+      // so the model keeps full context of any tool calls it made.
+      (result.historyAppend || [result.assistantTurn]).forEach(turn => agent.history.push(turn));
+
+    }catch(err){
+      typingEl.remove();
+      addSysMsg('Could not reach the provider. Check your internet connection or a browser extension blocking the request.');
+      agent.history.pop();
+    } finally {
+      sendBtn.disabled = false;
+    }
+  }
+
+  document.getElementById('sendBtn').addEventListener('click', () => {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if(!text || !agent) return;
+    input.value = '';
+    sendToAgent(text, false);
+  });
+  document.getElementById('chatInput').addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      document.getElementById('sendBtn').click();
+    }
+  });
+
+  // ================================================================
+  // FREE HOODFACTORY AGENT (server-side, rate limit 10/wallet/24h)
+  // Built on the HOODFACTORY contracts; every action is signed by the user.
+  // ================================================================
+  const faBox = document.getElementById('faChatBox');
+  const faHistory = [];
+  let faBusy = false;
+  let faImageContext = null;
+  let faWalletAuth = null;
+  let faConversationId = (crypto.randomUUID?crypto.randomUUID():'chat_'+Date.now()).replace(/-/g,'_');
+  async function faEnsureWalletAuth(){
+    if(!currentWallet) throw Error('Connect your wallet first.');
+    if(faWalletAuth?.wallet===currentWallet&&faWalletAuth.expiresAt>Date.now()+15000)return faWalletAuth;
+    const r=await fetch(`/api/agent-history?wallet=${currentWallet}`),c=await r.json();
+    if(!r.ok||!c.message)throw Error('Wallet verification is unavailable.');
+    const signer=await hoodEnsureChain(),signature=await signer.signMessage(c.message);
+    faWalletAuth={wallet:currentWallet,message:c.message,signature,expiresAt:Number(c.expiresAt||0)};
+    return faWalletAuth;
+  }
+
+  function faMsg(cls, text, imageUrl){
+    const d = document.createElement('div');
+    d.className = 'msg ' + cls;
+    if(imageUrl){const img=document.createElement('img');img.src=imageUrl;img.alt='User attachment';d.appendChild(img)}
+    const copy=document.createElement('span');copy.textContent=text;d.appendChild(copy);
+    faBox.appendChild(d);
+    faBox.scrollTop = faBox.scrollHeight;
+    return d;
+  }
+  async function faPrepareImage(file){
+    if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>8*1024*1024)throw Error('Use a JPG, PNG, or WebP image under 8 MB.');
+    const src=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||''));reader.onerror=reject;reader.readAsDataURL(file)});
+    const image=await new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=src});
+    const scale=Math.min(1,1200/Math.max(image.naturalWidth,image.naturalHeight)),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(image.naturalWidth*scale));canvas.height=Math.max(1,Math.round(image.naturalHeight*scale));canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);const dataUrl=canvas.toDataURL('image/webp',.82),data=dataUrl.split(',')[1]||'';if(data.length>2000000)throw Error('Choose a smaller image.');return{name:file.name,mimeType:'image/webp',data,dataUrl};
+  }
+  function faRenderImage(){const preview=document.getElementById('faImagePreview');preview.classList.toggle('show',!!faImageContext);if(faImageContext){document.getElementById('faImageThumb').src=faImageContext.dataUrl;document.getElementById('faImageName').textContent=faImageContext.name}else{document.getElementById('faImageThumb').removeAttribute('src');document.getElementById('faImageName').textContent=''}}
+  document.getElementById('faImageBtn').addEventListener('click',()=>document.getElementById('faImageInput').click());
+  document.getElementById('faImageRemove').addEventListener('click',()=>{faImageContext=null;faRenderImage()});
+  document.getElementById('faImageInput').addEventListener('change',async event=>{const file=event.target.files?.[0];event.target.value='';if(!file)return;try{faImageContext=await faPrepareImage(file);faRenderImage()}catch(e){faMsg('sys',safeAgentUiError(e,'The image could not be prepared. Please choose another image.'))}});
+  document.getElementById('faHistoryBtn').addEventListener('click',()=>{if(window.parent!==window){window.parent.location.hash='#chat';setTimeout(()=>{try{window.parent.openChatHistory()}catch(e){}},120)}else{location.href='index.html#chat'}});
+  function faConfirmCard(rows, btnLabel, onConfirm){
+    const card = document.createElement('div');
+    card.className = 'deploy-card';
+    card.innerHTML = rows.map(([k]) =>
+      `<div class="dc-row"${k==='To' ? ' style="flex-direction:column; gap:2px;"' : ''}><span></span><span${k==='To' ? ' style="word-break:break-all;"' : ''}></span></div>`
+    ).join('') + `<button class="btn"></button>`;
+    card.querySelectorAll('.dc-row').forEach((row,i) => {
+      row.querySelector('span:first-child').textContent = rows[i][0];
+      row.querySelector('span:last-child').textContent = rows[i][1];
+    });
+    const btn = card.querySelector('button');
+    btn.textContent = btnLabel;
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      try{ await onConfirm(btn); }
+      catch(err){ btn.disabled = false; btn.textContent = btnLabel; faMsg('sys', safeAgentUiError(err,'The transaction could not be completed. Please try again.')); }
+    });
+    faBox.appendChild(card);
+    faBox.scrollTop = faBox.scrollHeight;
+  }
+
+  async function faRefreshUsage(){
+    const el = document.getElementById('faUsage');
+    if(!currentWallet){ el.textContent = ''; return; }
+    try{
+      const auth=await faEnsureWalletAuth();
+      const r = await fetch(`/api/app-agent?wallet=${currentWallet}&authMessage=${encodeURIComponent(auth.message)}&authSignature=${encodeURIComponent(auth.signature)}`);
+      const s = await r.json();
+      if(s.subscribed){ el.textContent = '★ Subscribed — unlimited'; el.classList.remove('low'); return; }
+      const left = Math.max(0, (s.limit||10) - (s.used||0));
+      el.textContent = `${left}/${s.limit||10} free messages left (24h)`;
+      el.classList.toggle('low', left <= 2);
+    }catch(e){ el.textContent = ''; }
+  }
+
+  async function faSend(){
+    const input = document.getElementById('faInput');
+    const text = input.value.trim();
+    if((!text&&!faImageContext) || faBusy) return;
+    if(!currentWallet){ faMsg('sys', 'Connect your wallet first.'); return; }
+    input.value = '';
+    const userText=text||'Analyze this image and explain what you can help me do with it.',currentImage=faImageContext?{...faImageContext}:null;
+    faMsg('user', userText,currentImage?.dataUrl);
+    faHistory.push({ role:'user', content:userText });
+    faBusy = true;
+    const typing = faMsg('sys', 'Agent is thinking...');
+    try{
+      const requestMessages=faHistory.map((message,index)=>index===faHistory.length-1&&currentImage?{...message,image:{mimeType:currentImage.mimeType,data:currentImage.data}}:message),turnId='turn_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+      const auth=await faEnsureWalletAuth();
+      const res = await fetch('/api/app-agent', {
+        method:'POST', headers:{ 'content-type':'application/json' },
+        body: JSON.stringify({ wallet: currentWallet, authMessage:auth.message, authSignature:auth.signature, messages: requestMessages, chainId: String(HOOD.chainId),conversationId:faConversationId,turnId })
+      });
+      const data = await res.json();
+      typing.remove();
+      if(data.type === 'limit'){ openLimitModal(data.resetAt); faHistory.pop(); return; }
+      if(data.error){ faMsg('sys', 'The agent could not complete that request. Please try again.'); faHistory.pop(); return; }
+      faMsg('agent', data.text || '...');
+      faHistory.push({ role:'assistant', content: data.text || '' });
+      if(data.type === 'create_token' && data.params) faCreateCard(data.params);
+      else if(data.type === 'check_balance') faCheckBalance(data.params || {});
+      else if(data.type === 'swap' && data.params) faSwapCard(data.params);
+      else if(data.type === 'send' && data.params) faSendCard(data.params);
+      if(data.usage) faRefreshUsage();
+      faImageContext=null;faRenderImage();
+    }catch(err){
+      typing.remove();
+      faMsg('sys', 'The agent is temporarily unavailable. Please try again.');
+      faHistory.pop();
+    }finally{ faBusy = false; }
+  }
+  document.getElementById('faSendBtn').addEventListener('click', faSend);
+  document.getElementById('faInput').addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); faSend(); }
+  });
+
+  // ---- free-agent on-chain actions (reusing the existing hood* helpers) ----
+  function faCheckBalance(params){
+    (async () => {
+      try{
+        const me = currentWallet;
+        const lines = [`ETH: ${hoodFmt(ethers.formatEther(await hoodRead.getBalance(me)))}`];
+        const asset = hoodResolveAsset(params.token);
+        if(asset.kind === 'token'){
+          const meta = await hoodTokenMeta(asset.address);
+          const bal = await new ethers.Contract(asset.address, HOOD_ERC20_ABI, hoodRead).balanceOf(me);
+          lines.push(`${meta.symbol}: ${hoodFmt(ethers.formatUnits(bal, meta.decimals))}`);
+        } else {
+          for(const t of hoodMarketTokens.slice(0,12)){
+            try{ const b = await new ethers.Contract(t.address, HOOD_ERC20_ABI, hoodRead).balanceOf(me); if(b>0n) lines.push(`${t.symbol}: ${hoodFmt(ethers.formatUnits(b,18))}`); }catch(e){}
+          }
+        }
+        faMsg('agent', `Wallet ${currentWallet.slice(0,6)}...${currentWallet.slice(-4)}:\n` + lines.join('\n'));
+      }catch(err){ faMsg('sys', safeAgentUiError(err,'The balance could not be loaded. Please try again.')); }
+    })();
+  }
+  function faCreateCard(p){
+    faConfirmCard(
+      [['Action','CREATE TOKEN'],['Name',p.name],['Ticker',p.ticker],['Supply','1,000,000,000 (fixed)'],['Cost','gas only']],
+      'CONFIRM & DEPLOY FROM MY WALLET',
+      async (btn) => {
+        if(!hoodChainReady) throw new Error('Contracts not deployed.');
+        const signer = await hoodEnsureChain();
+        const pad = new ethers.Contract(HOOD.launchpad, HOOD_LAUNCHPAD_ABI, signer);
+        btn.textContent = 'DEPLOYING...';
+        const tx = await pad.createCoin(p.name, p.ticker);
+        const rc = await tx.wait();
+        let addr = null;
+        for(const log of rc.logs){ try{ const pl = pad.interface.parseLog(log); if(pl?.name==='CoinCreated'){ addr = pl.args.token; break; } }catch(e){} }
+        btn.textContent = 'DEPLOYED ✓';
+        faMsg('agent', `Deployed ${p.name} (${p.ticker}) — ${HOOD.explorerUrl}/address/${addr}`);
+        try{ await fetch('/api/tokens-register',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({chainId:String(HOOD.chainId),token:addr,txHash:tx.hash})}); }catch(e){}
+      }
+    );
+  }
+  function faSwapCard(p){
+    const from = hoodResolveAsset(p.from), to = hoodResolveAsset(p.to);
+    if(from.kind==='unknown' || to.kind==='unknown'){ faMsg('sys', `Unknown token — paste its 0x address.`); return; }
+    faConfirmCard(
+      [['Action','SWAP'],['You pay',`${p.amount} ${from.symbol||from.address?.slice(0,8)+'…'}`],['You receive', to.symbol||to.address?.slice(0,8)+'…'],['Slippage','5%']],
+      'CONFIRM SWAP IN MY WALLET',
+      async (btn) => {
+        const signer = await hoodEnsureChain();
+        const tokenIn = from.kind==='eth' ? HOOD.weth : from.address;
+        const tokenOut = to.kind==='eth' ? HOOD.weth : to.address;
+        const inMeta = from.kind==='eth' ? {decimals:18} : await hoodTokenMeta(tokenIn);
+        const amt = ethers.parseUnits(p.amount, inMeta.decimals);
+        btn.textContent = 'ROUTING...';
+        const q = await hoodQuoteGeneral(tokenIn, tokenOut, amt);
+        if(!q) throw new Error('No Uniswap V3 liquidity for this pair.');
+        const minOut = (q.amountOut*95n)/100n;
+        if(from.kind!=='eth'){
+          const erc = new ethers.Contract(tokenIn, HOOD_ERC20_ABI, signer);
+          if((await erc.allowance(currentWallet, HOOD.swapRouter02)) < amt){ btn.textContent='APPROVING...'; await (await erc.approve(HOOD.swapRouter02, amt)).wait(); }
+        }
+        btn.textContent = 'SWAPPING...';
+        const router = new ethers.Contract(HOOD.swapRouter02, HOOD_ROUTER02_ABI, signer);
+        const toEth = to.kind==='eth';
+        const recipient = toEth ? HOOD_ADDRESS_THIS : currentWallet;
+        const value = from.kind==='eth' ? amt : 0n;
+        const swapData = q.fee!==undefined
+          ? router.interface.encodeFunctionData('exactInputSingle', [{tokenIn,tokenOut,fee:q.fee,recipient,amountIn:amt,amountOutMinimum:minOut,sqrtPriceLimitX96:0n}])
+          : router.interface.encodeFunctionData('exactInput', [{path:q.path,recipient,amountIn:amt,amountOutMinimum:minOut}]);
+        const tx = toEth
+          ? await router.multicall([swapData, router.interface.encodeFunctionData('unwrapWETH9',[minOut,currentWallet])], {value})
+          : await signer.sendTransaction({ to: HOOD.swapRouter02, data: swapData, value });
+        await tx.wait();
+        btn.textContent = 'SWAP ✓';
+        faMsg('agent', `Swap done — ${HOOD.explorerUrl}/tx/${tx.hash}`);
+      }
+    );
+  }
+  function faSendCard(p){
+    const asset = hoodResolveAsset(p.token);
+    if(asset.kind==='unknown'){ faMsg('sys', `Unknown token "${p.token}".`); return; }
+    faConfirmCard(
+      [['Action','SEND — check the address!'],['Asset', asset.symbol||asset.address],['Amount', p.amount],['To', p.to]],
+      'CONFIRM SEND IN MY WALLET',
+      async (btn) => {
+        const signer = await hoodEnsureChain();
+        btn.textContent = 'SENDING...';
+        let tx;
+        if(asset.kind==='eth'){ tx = await signer.sendTransaction({ to:p.to, value: ethers.parseEther(p.amount) }); }
+        else { const meta = await hoodTokenMeta(asset.address); tx = await new ethers.Contract(asset.address, HOOD_ERC20_ABI, signer).transfer(p.to, ethers.parseUnits(p.amount, meta.decimals)); }
+        await tx.wait();
+        btn.textContent = 'SENT ✓';
+        faMsg('agent', `Sent ${p.amount} ${asset.symbol||''} to ${p.to} — ${HOOD.explorerUrl}/tx/${tx.hash}`);
+      }
+    );
+  }
+
+  // ---- limit modal + subscribe / BYOK ----
+  function openLimitModal(resetAt){
+    const el = document.getElementById('limitReset');
+    el.textContent = resetAt ? ' (around ' + new Date(resetAt).toLocaleString() + ')' : '';
+    fetch('/api/agent-subscribe').then(r=>r.json()).then(cfg => {
+      document.getElementById('subPriceEth').textContent = cfg.priceEth ? `(${cfg.priceEth} ETH)` : '';
+      window.__hoodPlan = cfg;
+    }).catch(()=>{});
+    document.getElementById('limitErr').classList.remove('show');
+    document.getElementById('limitModal').classList.add('show');
+  }
+  document.getElementById('limitCloseBtn').addEventListener('click', () => document.getElementById('limitModal').classList.remove('show'));
+  document.getElementById('byokBtn').addEventListener('click', () => {
+    document.getElementById('limitModal').classList.remove('show');
+    // Route to the BYOK agent builder (form panel below).
+    if(hasTosAccepted()){ resetFormSteps(); showView('form'); } else { openTosModal('gate'); }
+    document.getElementById('formSection').scrollIntoView({ behavior:'smooth' });
+  });
+
+  // Shared on-chain subscription flow (used by both the limit modal and the options block).
+  async function runSubscribe(btn){
+    const label = 'Subscribe — $10 / month';
+    const errEl = document.getElementById('limitErr');
+    if(errEl) errEl.classList.remove('show');
+    try{
+      const cfg = window.__hoodPlan || await (await fetch('/api/agent-subscribe')).json();
+      if(!cfg.treasury) throw new Error('Subscriptions are temporarily unavailable.');
+      btn.disabled = true; btn.textContent = 'WAITING FOR WALLET...';
+      const signer = await hoodEnsureChain();
+      const tx = await signer.sendTransaction({ to: cfg.treasury, value: BigInt(cfg.priceWei) });
+      btn.textContent = 'CONFIRMING PAYMENT...';
+      await tx.wait();
+      const r = await fetch('/api/agent-subscribe', { method:'POST', headers:{'content-type':'application/json'},
+        body: JSON.stringify({ chainId:String(HOOD.chainId), wallet: currentWallet, txHash: tx.hash }) });
+      const out = await r.json();
+      if(out.error) throw new Error('Subscription verification was not completed.');
+      btn.disabled = false; btn.innerHTML = label + ' <span style="opacity:.7;">' + ((window.__hoodPlan&&window.__hoodPlan.priceEth)?`(${window.__hoodPlan.priceEth} ETH)`:'') + '</span>';
+      document.getElementById('limitModal').classList.remove('show');
+      faMsg('sys', 'Subscription active until ' + new Date(out.expiresAt).toLocaleDateString() + '. Unlimited chats unlocked.');
+      faRefreshUsage();
+    }catch(err){
+      btn.disabled = false; btn.textContent = label;
+      const msg = safeAgentUiError(err,'The subscription could not be activated. No access change was made.');
+      if(errEl){ errEl.textContent = msg; errEl.classList.add('show'); } else { faMsg('sys', msg); }
+    }
+  }
+  document.getElementById('subscribeBtn').addEventListener('click', () => runSubscribe(document.getElementById('subscribeBtn')));
+
+  // refresh usage when wallet connects
+  const _origOnWalletConnected = typeof onWalletConnected === 'function' ? onWalletConnected : null;
+  window.onWalletConnected = function(address){
+    if(_origOnWalletConnected) _origOnWalletConnected(address);
+    faRefreshUsage();
+  };
+  faMsg('agent', 'FACTORY AI AGENT online. Create a token, swap, buy, sell, send assets, or attach an image and ask me about it.');
+</script>
+
+</div><!-- /#appBody -->
+
+<script>
+  // ---------- Wallet gate: wajib konek wallet sebelum masuk Agent Builder ----------
+  const gateEl = document.getElementById('walletGate');
+  const appBodyEl = document.getElementById('appBody');
+  const gateConnectBtn = document.getElementById('gateConnectBtn');
+  const gateErrEl = document.getElementById('gateErr');
+
+  function unlockApp(address){
+    gateEl.classList.add('hidden');
+    appBodyEl.classList.add('ready');
+    if(typeof onWalletConnected === 'function') onWalletConnected(address);
+  }
+  function lockApp(){
+    appBodyEl.classList.remove('ready');
+    gateEl.classList.remove('hidden');
+    if(typeof onWalletDisconnected === 'function') onWalletDisconnected();
+  }
+
+  async function tryGateConnect(){
+    gateErrEl.classList.remove('show');
+    try{
+      const address=await (await hoodPrivyBridge()).connect();
+      if(address) unlockApp(address);
+    }catch(err){
+      gateConnectBtn.textContent = 'Connection cancelled';
+      setTimeout(() => { gateConnectBtn.textContent = 'Connect Wallet'; }, 1800);
+    }
+  }
+  gateConnectBtn.addEventListener('click', tryGateConnect);
+
+  // Silent check: if the browser wallet was already connected before, unlock right away
+  (async function checkWalletOnLoad(){
+    try{
+      const address=(await hoodPrivyBridge()).getAddress();
+      if(address) unlockApp(address);
+    }catch(err){ /* stays locked if the check fails */ }
+  })();
+
+  // If the wallet disconnects / switches accounts while inside the app: lock again / reload the dashboard for the new account
+  window.addEventListener('hood:privy-wallet', event => event.detail?.address ? unlockApp(event.detail.address) : lockApp());
+</script>
+
+</body>
+</html>

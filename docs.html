@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOCS — HOODFACTORY</title>
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+<style>
+  @font-face{font-family:'Press Start 2P';src:url('assets/fonts/press-start-2p-latin.woff2') format('woff2');font-style:normal;font-weight:400;font-display:block;}
+  @font-face{font-family:'Space Grotesk';src:url('assets/fonts/space-grotesk-latin.woff2') format('woff2');font-style:normal;font-weight:400 700;font-display:block;}
+  @font-face{font-family:'IBM Plex Mono';src:url('assets/fonts/ibm-plex-mono-400-latin.woff2') format('woff2');font-style:normal;font-weight:400;font-display:block;}
+  @font-face{font-family:'IBM Plex Mono';src:url('assets/fonts/ibm-plex-mono-500-latin.woff2') format('woff2');font-style:normal;font-weight:500;font-display:block;}
+  @font-face{font-family:'IBM Plex Mono';src:url('assets/fonts/ibm-plex-mono-600-latin.woff2') format('woff2');font-style:normal;font-weight:600;font-display:block;}
+  :root{
+    --void:#0b0c08; --steel:#15170f; --steel-2:#1c1e14; --line:#33361f;
+    --acid:#d9f24b; --acid-dim:#a8bc3a; --concrete:#9a9d87; --hazard:#ff5a1f; --paper:#f4f5e9;
+    --pixel:'Press Start 2P', monospace; --mono:'IBM Plex Mono', monospace; --head:'Space Grotesk', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--void); color:var(--paper); font-family:var(--head); line-height:1.55; overflow-x:hidden;}
+  ::selection{background:var(--acid); color:var(--void);}
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+
+  .conveyor{
+    height:14px; width:100%;
+    background-image:repeating-linear-gradient(-45deg, var(--acid) 0px, var(--acid) 8px, var(--void) 8px, var(--void) 16px);
+    background-size:200% 100%; animation:belt 6s linear infinite;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  @keyframes belt{ from{background-position:0 0;} to{background-position:-64px 0;} }
+  @media (prefers-reduced-motion:reduce){ .conveyor{animation:none;} }
+
+  header{position:sticky; top:0; z-index:50; background:rgba(11,12,8,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
+  nav{display:flex; align-items:center; justify-content:space-between; padding:14px 28px; max-width:1180px; margin:0 auto; gap:16px;}
+  .brand{display:flex; align-items:center; gap:12px; font-family:var(--pixel); font-size:11px; letter-spacing:1px; color:var(--acid); text-decoration:none;}
+  .brand img{width:26px; height:26px; image-rendering:pixelated;}
+  .navlinks{display:flex; gap:24px; font-family:var(--mono); font-size:13px; color:var(--concrete);}
+  .navlinks a{text-decoration:none; transition:color .15s;}
+  .navlinks a:hover, .navlinks a.active{color:var(--acid);}
+  .btn{font-family:var(--mono); font-size:13px; font-weight:600; border:1px solid var(--acid); color:var(--void); background:var(--acid); padding:10px 18px; cursor:pointer; letter-spacing:.3px; text-decoration:none; display:inline-block; white-space:nowrap; transition:transform .12s ease, box-shadow .12s ease;}
+  .btn:hover{transform:translateY(-1px); box-shadow:3px 3px 0 var(--hazard);}
+
+  .doc-hero{padding:64px 0 40px; border-bottom:1px solid var(--line); background:radial-gradient(circle at 78% 10%, rgba(217,242,75,0.07), transparent 45%), var(--void);}
+  .eyebrow{font-family:var(--mono); font-size:12px; color:var(--acid-dim); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px;}
+  h1.title{font-family:var(--pixel); font-size:clamp(24px,4vw,40px); line-height:1.4; color:var(--paper); text-shadow:4px 4px 0 rgba(217,242,75,0.18);}
+  h1.title span{color:var(--acid);}
+  .doc-hero p.sub{color:var(--concrete); font-size:15.5px; max-width:64ch; margin-top:18px;}
+
+  /* table of contents */
+  .toc{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px;}
+  .toc a{font-family:var(--mono); font-size:12px; color:var(--concrete); border:1px solid var(--line); padding:7px 12px; text-decoration:none; transition:.15s;}
+  .toc a:hover{color:var(--acid); border-color:var(--acid-dim);}
+
+  section{padding:60px 0; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .section-head{margin-bottom:32px; max-width:74ch;}
+  .tag{font-family:var(--pixel); font-size:10px; color:var(--hazard); letter-spacing:1px; display:inline-block; margin-bottom:14px;}
+  h2{font-size:clamp(22px,3vw,30px); margin-bottom:12px;}
+  .section-head p{color:var(--concrete); font-size:15.5px;}
+  section p.body{color:var(--concrete); font-size:15px; max-width:74ch; margin-bottom:14px;}
+  section p.body b{color:var(--paper);}
+
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .card{border:1px solid var(--line); background:var(--steel); padding:24px;}
+  .card h3{font-family:var(--mono); font-size:14px; color:var(--acid); margin-bottom:10px; letter-spacing:.5px;}
+  .card p{color:var(--concrete); font-size:14.5px;}
+  .card ul{margin:10px 0 0 18px; color:var(--concrete); font-size:14px; display:flex; flex-direction:column; gap:6px;}
+
+  .flow{display:flex; align-items:stretch; gap:0; margin-top:24px; flex-wrap:wrap; border:1px solid var(--line);}
+  .flow-step{flex:1; min-width:180px; padding:20px; border-right:1px solid var(--line); position:relative;}
+  .flow-step:last-child{border-right:none;}
+  .flow-step .n{font-family:var(--mono); font-size:11px; color:var(--hazard);}
+  .flow-step h4{font-size:15px; margin:8px 0 6px; font-family:var(--head);}
+  .flow-step p{font-size:13px; color:var(--concrete);}
+
+  /* spec / fee tables */
+  .spec-scroll{overflow-x:auto; border:1px solid var(--line);}
+  table.spec{width:100%; border-collapse:collapse; font-family:var(--mono); font-size:13px; min-width:520px;}
+  table.spec th, table.spec td{text-align:left; padding:12px 16px; border-bottom:1px solid var(--line);}
+  table.spec th{color:var(--acid-dim); text-transform:uppercase; font-size:11px; letter-spacing:1px; background:var(--steel);}
+  table.spec td{color:var(--paper);}
+  table.spec td:first-child{color:var(--concrete);}
+  table.spec tr:last-child td{border-bottom:none;}
+  .mono-acid{color:var(--acid);}
+  code, .addr{font-family:var(--mono); font-size:12.5px; color:var(--acid); word-break:break-all;}
+  code{background:var(--steel-2); border:1px solid var(--line); padding:2px 6px;}
+  .addr a{color:var(--acid); text-decoration:none;}
+  .addr a:hover{text-decoration:underline;}
+
+  .roadmap{position:relative; padding-left:26px; border-left:2px dashed var(--line);}
+  .r-item{position:relative; padding-bottom:34px;}
+  .r-item:last-child{padding-bottom:0;}
+  .r-item::before{content:''; position:absolute; left:-33px; top:2px; width:14px; height:14px; background:var(--void); border:2px solid var(--acid);}
+  .r-item.done::before{background:var(--acid);}
+  .r-phase{font-family:var(--mono); font-size:11px; color:var(--hazard); letter-spacing:1px; margin-bottom:6px;}
+  .r-item h4{font-size:18px; margin-bottom:6px;}
+  .r-item p{color:var(--concrete); font-size:14.5px; max-width:60ch;}
+  .r-status{display:inline-block; margin-top:8px; font-family:var(--mono); font-size:11px; padding:3px 9px; border:1px solid var(--line); color:var(--concrete);}
+
+  .callout{border-left:2px solid var(--hazard); background:rgba(255,90,31,0.06); padding:16px 18px; margin-top:20px;}
+  .callout p{font-family:var(--mono); font-size:12.5px; color:var(--paper); line-height:1.8;}
+
+  footer{border-top:1px solid var(--line); padding:40px 0;}
+  .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px; align-items:center;}
+  .foot-brand{font-family:var(--pixel); font-size:11px; color:var(--acid);}
+  .foot-links{display:flex; gap:20px; font-family:var(--mono); font-size:12px; color:var(--concrete);}
+  .foot-links a{text-decoration:none; transition:color .15s;}
+  .foot-links a:hover{color:var(--acid);}
+  .disclaimer{font-family:var(--mono); font-size:11.5px; color:var(--concrete); line-height:1.8; max-width:80ch; margin-top:14px;}
+
+  @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} .navlinks{display:none;} }
+  @media (max-width:600px){
+    .wrap{padding:0 16px;}
+    nav{padding:10px 14px;gap:10px;}
+    .brand{font-size:9px;}
+    nav>.btn{font-size:10px;padding:9px 10px;}
+    .doc-hero{padding:46px 0 30px;}
+    h1.title{font-size:clamp(22px,9vw,32px);overflow-wrap:anywhere;}
+    section{padding:44px 0;}
+    .flow{display:grid;grid-template-columns:1fr;}
+    .flow-step{min-width:0;border-right:0;border-bottom:1px solid var(--line);}
+    .flow-step:last-child{border-bottom:0;}
+    .foot-grid{display:grid;grid-template-columns:1fr;}
+    .foot-links{flex-wrap:wrap;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="brand" href="index.html#home"><img src="hoodfactory-logo.png" alt="HOODFACTORY logo">HOODFACTORY</a>
+    <div class="navlinks">
+      <a href="index.html#home">Home</a>
+      <a href="index.html#chat">Chat Agent</a>
+      <a href="index.html#market">Market</a>
+      <a href="index.html#swap">Swap</a>
+      <a href="index.html#dashboard">Dashboard</a>
+      <a href="docs.html" class="active">Docs</a>
+    </div>
+    <a href="index.html" class="btn">← Back to App</a>
+  </nav>
+</header>
+
+<div class="conveyor"></div>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <div class="eyebrow">HOODFACTORY // DOCUMENTATION</div>
+    <h1 class="title">DOCS<span>.</span></h1>
+    <p class="sub">HOODFACTORY is an AI-agent-driven token launchpad on Robinhood Chain. Chat to launch a token, look one up, check your wallet, swap, and send — every transaction is signed by your own wallet. This page explains how the agent, the launchpad, and the on-chain mechanics work.</p>
+    <div class="toc">
+      <a href="#overview">Overview</a>
+      <a href="#agent">Chat Agent</a>
+      <a href="#launchpad">Token Launchpad</a>
+      <a href="#fees">Fees</a>
+      <a href="#trading">Market &amp; Swap</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#own-agent">Own Agent (BYOK)</a>
+      <a href="#contracts">Contracts</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#disclaimer">Disclaimer</a>
+    </div>
+  </div>
+</div>
+
+<section id="overview">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">OVERVIEW</span>
+      <h2>An AI agent that actually does things on-chain</h2>
+      <p>Instead of menus and forms, HOODFACTORY gives you one chat box. Describe what you want in plain language and the agent prepares the transaction; your wallet signs it and pays the network gas. HOODFACTORY never holds your funds, keys, or private data.</p>
+    </div>
+    <div class="about-grid">
+      <div class="card">
+        <h3>WHAT THE AGENT CAN DO</h3>
+        <ul>
+          <li><b style="color:var(--paper)">Create a token</b> on the launchpad</li>
+          <li><b style="color:var(--paper)">Check</b> your ETH and token balances</li>
+          <li><b style="color:var(--paper)">Swap</b> ETH ↔ token or token ↔ token</li>
+          <li><b style="color:var(--paper)">Send</b> ETH or tokens to any address</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>WHO SIGNS &amp; PAYS</h3>
+        <p>The agent only <b style="color:var(--paper)">prepares</b> an action and shows a confirmation card. Nothing happens until <b style="color:var(--paper)">you</b> approve it in your own wallet. You pay only the Robinhood Chain gas fee — HOODFACTORY charges no creation fee.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="agent">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">CHAT AGENT</span>
+      <h2>The HOODFACTORY agent</h2>
+      <p>The built-in agent is free to try — <b>10 messages per wallet every 24 hours</b>, no setup and no API key required. Usage is tracked per wallet address, so it stays consistent even if you disconnect and reconnect.</p>
+    </div>
+    <div class="about-grid">
+      <div class="card">
+        <h3>FREE TIER</h3>
+        <p>10 messages per wallet / 24h. When the limit is reached, the agent lets you keep going in one of two ways below.</p>
+      </div>
+      <div class="card">
+        <h3>KEEP GOING</h3>
+        <ul>
+          <li><b style="color:var(--paper)">Unlimited — $10 / month</b>, paid on-chain in ETH to the protocol treasury. Access unlocks for 30 days.</li>
+          <li><b style="color:var(--paper)">Bring your own key (BYOK)</b> — build a custom agent with your own API key (see “Own Agent” below).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout"><p>The agent prepares transactions only. It never moves funds on its own, and it will always ask you to confirm and sign in your wallet. When sending, it requires the full destination address and never guesses it.</p></div>
+  </div>
+</section>
+
+<section id="launchpad">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">TOKEN LAUNCHPAD</span>
+      <h2>How a token launch works</h2>
+      <p>Every token created through HOODFACTORY is a fixed-supply ERC-20 with an instant, permanently locked market. There is no bonding curve and no migration step — trading is live in the same pool from the moment of creation.</p>
+    </div>
+
+    <div class="flow">
+      <div class="flow-step"><div class="n">1 · MINT</div><h4>Fixed supply</h4><p>1,000,000,000 tokens are minted. The token has no owner, no mint, no pause, and no blacklist.</p></div>
+      <div class="flow-step"><div class="n">2 · ALLOCATION</div><h4>20% configured allocation</h4><p>200,000,000 (20%) are transferred to the allocation wallet configured in the launchpad.</p></div>
+      <div class="flow-step"><div class="n">3 · LIQUIDITY</div><h4>80% locked LP</h4><p>800,000,000 (80%) are deposited as single-sided Token/WETH liquidity on Uniswap V3.</p></div>
+      <div class="flow-step"><div class="n">4 · LOCK</div><h4>Permanent</h4><p>The LP position (NFT) is owned and permanently locked by the launchpad — the principal cannot be withdrawn.</p></div>
+    </div>
+
+    <div class="spec-scroll" style="margin-top:24px;">
+      <table class="spec">
+        <tr><th>Parameter</th><th>Value</th></tr>
+        <tr><td>Total supply</td><td class="mono-acid">1,000,000,000 (fixed)</td></tr>
+        <tr><td>Creator reward</td><td>200,000,000 · 20%</td></tr>
+        <tr><td>Allocation release</td><td>No automatic cliff or linear vesting is enforced by the current contracts.</td></tr>
+        <tr><td>Market liquidity</td><td>800,000,000 · 80%</td></tr>
+        <tr><td>Pair</td><td>Token / WETH</td></tr>
+        <tr><td>DEX</td><td>Uniswap V3 · 1% fee tier</td></tr>
+        <tr><td>Liquidity model</td><td>Single-sided, permanently locked</td></tr>
+        <tr><td>Creation fee</td><td>0 (you pay only gas)</td></tr>
+        <tr><td>Trading</td><td>Live immediately, same pool</td></tr>
+      </table>
+    </div>
+    <p class="body" style="margin-top:16px;">The allocation (20% · 200,000,000) is transferred to the wallet configured in the launchpad. The current contracts do not enforce an automatic cliff or linear vesting schedule. The remaining 80% liquidity is locked permanently at launch and cannot be withdrawn.</p>
+  </div>
+</section>
+
+<section id="fees">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">FEES</span>
+      <h2>Trading &amp; LP fees</h2>
+      <p>Swaps through HOODFACTORY carry the underlying Uniswap V3 pool fee plus a small platform fee. Liquidity-provider fees earned by the locked position are split between the token creator and the protocol.</p>
+    </div>
+    <div class="spec-scroll">
+      <table class="spec">
+        <tr><th>Fee</th><th>Rate</th><th>Notes</th></tr>
+        <tr><td>Uniswap V3 pool fee</td><td class="mono-acid">1%</td><td>Per swap, on launchpad token pools</td></tr>
+        <tr><td>HOODFACTORY platform fee</td><td class="mono-acid">0.5%</td><td>Per swap through the HOODFACTORY router</td></tr>
+        <tr><td>Total (launchpad tokens)</td><td class="mono-acid">~1.5%</td><td>Excludes price impact, slippage &amp; gas</td></tr>
+        <tr><td>LP fee — creator share</td><td>55%</td><td>Of collected pool fees</td></tr>
+        <tr><td>LP fee — protocol share</td><td>45%</td><td>Of collected pool fees</td></tr>
+      </table>
+    </div>
+    <p class="body" style="margin-top:16px;">External tokens swapped in the Swap section use their own standard Uniswap V3 pool fee (0.05%–1% depending on the pool). A default slippage guard is applied to every swap.</p>
+  </div>
+</section>
+
+<section id="trading">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">MARKET &amp; SWAP</span>
+      <h2>Trade launchpad tokens and beyond</h2>
+    </div>
+    <div class="about-grid">
+      <div class="card">
+        <h3>MARKET</h3>
+        <p>Every token created through HOODFACTORY is listed automatically. You can buy and sell straight from the card — orders route through the HOODFACTORY router into each token's locked Uniswap V3 pool. The <b style="color:var(--paper)">Trending</b> row ranks tokens by 24-hour swap volume.</p>
+      </div>
+      <div class="card">
+        <h3>SWAP</h3>
+        <p>The Swap section is not limited to HOODFACTORY tokens — any token with a Uniswap V3 pool on Robinhood Chain can be swapped. Pick from the list or paste a contract address; routing goes through a direct pool or via WETH when needed. Always do your own research on external tokens.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dashboard">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">DASHBOARD</span>
+      <h2>Everything tied to your wallet</h2>
+      <p>Connect your wallet to see a personal overview of your HOODFACTORY activity.</p>
+    </div>
+    <div class="about-grid">
+      <div class="card"><h3>PORTFOLIO</h3><p>Your ETH balance and holdings of HOODFACTORY tokens, refreshed live.</p></div>
+      <div class="card"><h3>YOUR TOKENS &amp; AGENTS</h3><p>Tokens you created and any custom agents you built, with quick links back into the Market and the builder.</p></div>
+      <div class="card"><h3>ACTIVITY</h3><p>Your recent on-chain trades — buys, sells and swaps — with transaction links to the explorer.</p></div>
+      <div class="card"><h3>SUBSCRIPTION</h3><p>Your agent subscription status, including when unlimited access expires if active.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="own-agent">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">OWN AGENT — BYOK</span>
+      <h2>Build a custom agent with your own key</h2>
+      <p>Prefer no limits and full control? Assemble your own agent and connect your own API key. The call goes straight from your browser to the provider you choose — <b>your key is never sent to HOODFACTORY's servers</b>, and provider usage is billed to your own account.</p>
+    </div>
+    <div class="about-grid">
+      <div class="card">
+        <h3>PROVIDERS &amp; TOOLS</h3>
+        <ul>
+          <li>Choose Anthropic, OpenAI, or Google and paste your key</li>
+          <li>Give the agent a goal: Research &amp; Analysis, or On-chain Tools</li>
+          <li>Optional Whale Radar tools for on-chain signal, holders, transfers &amp; risk checks</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>SAME ON-CHAIN POWERS</h3>
+        <p>A BYOK agent can do everything the built-in agent can — create tokens, check balances, swap and send — all built on the HOODFACTORY contracts, and always signed by your own wallet. Your saved agents live in your browser, per wallet address; your API key is never stored.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contracts">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">CONTRACTS</span>
+      <h2>Network &amp; addresses</h2>
+      <p>HOODFACTORY currently runs on <b>Robinhood Chain Testnet</b> (chain ID 46630, native gas token ETH). Addresses will change for the mainnet deployment.</p>
+    </div>
+    <div class="spec-scroll">
+      <table class="spec">
+        <tr><th>Contract</th><th>Address</th></tr>
+        <tr><td>HoodLaunchpad</td><td class="addr"><a href="https://explorer.testnet.chain.robinhood.com/address/0x91166E78fFf898e96A96950E13584A2cc15dB400" target="_blank" rel="noopener">0x91166E78fFf898e96A96950E13584A2cc15dB400</a></td></tr>
+        <tr><td>HoodSwapRouter</td><td class="addr"><a href="https://explorer.testnet.chain.robinhood.com/address/0x1601D055E33E680fAEE64c0934588e8b722f9CC8" target="_blank" rel="noopener">0x1601D055E33E680fAEE64c0934588e8b722f9CC8</a></td></tr>
+        <tr><td>Uniswap V3 SwapRouter02</td><td class="addr"><a href="https://explorer.testnet.chain.robinhood.com/address/0x05FaE28A5917DA56D464fcfC13Ee9141B4FC057c" target="_blank" rel="noopener">0x05FaE28A5917DA56D464fcfC13Ee9141B4FC057c</a></td></tr>
+        <tr><td>Uniswap V3 QuoterV2</td><td class="addr"><a href="https://explorer.testnet.chain.robinhood.com/address/0xd9613Dd50dD035FB630181811dD65191791BeFB6" target="_blank" rel="noopener">0xd9613Dd50dD035FB630181811dD65191791BeFB6</a></td></tr>
+        <tr><td>WETH</td><td class="addr"><a href="https://explorer.testnet.chain.robinhood.com/address/0x33e4191705c386532ba27cBF171Db86919200B94" target="_blank" rel="noopener">0x33e4191705c386532ba27cBF171Db86919200B94</a></td></tr>
+      </table>
+    </div>
+    <p class="body" style="margin-top:16px;">Explorer: <code>explorer.testnet.chain.robinhood.com</code> · RPC: <code>rpc.testnet.chain.robinhood.com</code>. Always verify a token's contract address on the explorer before trading.</p>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">ROADMAP</span>
+      <h2>Build stages</h2>
+      <p>This roadmap outlines the planned order of work. Timing for each stage may change with development progress and market conditions.</p>
+    </div>
+    <div class="roadmap">
+      <div class="r-item done">
+        <div class="r-phase">PHASE 0</div>
+        <h4>Foundation</h4>
+        <p>Product concept, HOODFACTORY's identity, and the core contracts.</p>
+        <span class="r-status">Done</span>
+      </div>
+      <div class="r-item done">
+        <div class="r-phase">PHASE 1</div>
+        <h4>Testnet launch</h4>
+        <p>Launchpad, swap router, chat agent, market, and dashboard live on Robinhood Chain Testnet.</p>
+        <span class="r-status">In progress</span>
+      </div>
+      <div class="r-item">
+        <div class="r-phase">PHASE 2</div>
+        <h4>Mainnet deployment</h4>
+        <p>Deploy the contracts to Robinhood Chain mainnet and connect the app to the mainnet addresses.</p>
+        <span class="r-status">Not started</span>
+      </div>
+      <div class="r-item">
+        <div class="r-phase">PHASE 3</div>
+        <h4>Expanded agent &amp; integrations</h4>
+        <p>More agent capabilities, richer token pages, and third-party tool integrations.</p>
+        <span class="r-status">Not started</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="disclaimer">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">DISCLAIMER</span>
+      <h2>Important notes</h2>
+    </div>
+    <p class="disclaimer">HOODFACTORY is experimental software currently running on a testnet. Nothing here is financial, investment, or security advice. Creating a token does not give it any value. On-chain actions are irreversible and are always signed by your own wallet — verify every confirmation card, contract address, and destination address before approving. Any risk signals shown in the app are basic heuristics from public data, not a smart-contract audit. Always do your own research.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="foot-brand">HOODFACTORY / $FACTORY</div>
+    <div class="foot-links">
+      <a href="index.html#home">App</a>
+      <a href="index.html#chat">Chat Agent</a>
+      <a href="index.html#market">Market</a>
+      <a href="index.html#swap">Swap</a>
+      <a href="docs.html">Docs</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

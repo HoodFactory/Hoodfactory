@@ -1,0 +1,16 @@
+node_modules/
+.env
+.env.*
+*.save
+*.bak
+*.log
+.DS_Store
+.vercel/
+contracts/artifacts/
+contracts/cache/
+contracts/typechain-types/
+contracts/coverage/
+contracts/coverage.json
+contracts/deployments.local.json
+privy-wallet.js
+api/

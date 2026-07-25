@@ -1,0 +1,1641 @@
+{
+  "_readme": [
+    "Whitelist of canonical Robinhood Stock Tokens accepted by HoodStockLaunchpad.",
+    "Mainnet addresses, active status, prices, and corporate-action multipliers are",
+    "synchronized from https://api.robinhood.com/rhj before deployment.",
+    "referenceAmount prices 10,000,000 launch tokens at an approximately $24 quote",
+    "value and includes currentMultiplier, as required by Robinhood's API docs.",
+    "Run node scripts/sync-stock-tokens.js immediately before mainnet whitelisting."
+  ],
+  "startingFdvUsd": 2400,
+  "networks": {
+    "4663": {
+      "name": "Robinhood Chain",
+      "mock": false,
+      "tokens": [
+        {
+          "symbol": "AAOI",
+          "name": "Applied Optoelectronics",
+          "address": "0x521Cf887E6531c6F667b5BC4D896E5d9bfE8EB2E",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x521cf887e6531c6f667b5bc4d896e5d9bfe8eb2e.png",
+          "decimals": 18,
+          "referenceAmount": "239628575707653138",
+          "referenceNote": "10,000,000 tokens = 239628575707653138 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "AAPL",
+          "name": "Apple",
+          "address": "0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xaf3d76f1834a1d425780943c99ea8a608f8a93f9.png",
+          "decimals": 18,
+          "referenceAmount": "72038540619231289",
+          "referenceNote": "10,000,000 tokens = 72038540619231289 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "AMAT",
+          "name": "Applied Materials",
+          "address": "0x36046893810a7E7fCE501229d57dc3FC8c8716d0",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x36046893810a7e7fce501229d57dc3fc8c8716d0.png",
+          "decimals": 18,
+          "referenceAmount": "44690240768672141",
+          "referenceNote": "10,000,000 tokens = 44690240768672141 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "AMD",
+          "name": "AMD",
+          "address": "0x86923f96303D656E4aa86D9d42D1e57ad2023fdC",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x86923f96303d656e4aa86d9d42d1e57ad2023fdc.png",
+          "decimals": 18,
+          "referenceAmount": "45930377203222781",
+          "referenceNote": "10,000,000 tokens = 45930377203222781 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "AMZN",
+          "name": "Amazon",
+          "address": "0x12f190a9F9d7D37a250758b26824B97CE941bF54",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x12f190a9f9d7d37a250758b26824b97ce941bf54.png",
+          "decimals": 18,
+          "referenceAmount": "103452735031682400",
+          "referenceNote": "10,000,000 tokens = 103452735031682400 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "APLD",
+          "name": "Applied Digital",
+          "address": "0xb8DBf92F9741c9ac1c32115E78581f23509916FD",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xb8dbf92f9741c9ac1c32115e78581f23509916fd.png",
+          "decimals": 18,
+          "referenceAmount": "875912408759124088",
+          "referenceNote": "10,000,000 tokens = 875912408759124088 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "ASML",
+          "name": "ASML Holding NV",
+          "address": "0x47F93d52cBeC7C6D2CfC080e154002370a60dAEA",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x47f93d52cbec7c6d2cfc080e154002370a60daea.png",
+          "decimals": 18,
+          "referenceAmount": "13691596782474756",
+          "referenceNote": "10,000,000 tokens = 13691596782474756 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "ASTS",
+          "name": "AST SpaceMobile",
+          "address": "0x1AF6446f07eb1d97c546AFC8c9544cBDF3AD5137",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x1af6446f07eb1d97c546afc8c9544cbdf3ad5137.png",
+          "decimals": 18,
+          "referenceAmount": "426363474862320128",
+          "referenceNote": "10,000,000 tokens = 426363474862320128 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "AVGO",
+          "name": "Broadcom",
+          "address": "0x156E175DD063a8cE274C50654eF40e0032b3fbcF",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x156e175dd063a8ce274c50654ef40e0032b3fbcf.png",
+          "decimals": 18,
+          "referenceAmount": "62913690281145553",
+          "referenceNote": "10,000,000 tokens = 62913690281145553 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "BA",
+          "name": "Boeing",
+          "address": "0x4D21483a44Bf67a86b77E3dA301411880797D452",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x4d21483a44bf67a86b77e3da301411880797d452.png",
+          "decimals": 18,
+          "referenceAmount": "114149821640903686",
+          "referenceNote": "10,000,000 tokens = 114149821640903686 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "BABA",
+          "name": "Alibaba",
+          "address": "0xad25Ac6C84D497db898fa1E8387bf6Af3532a1c4",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xad25ac6c84d497db898fa1e8387bf6af3532a1c4.png",
+          "decimals": 18,
+          "referenceAmount": "213760855043420174",
+          "referenceNote": "10,000,000 tokens = 213760855043420174 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "BE",
+          "name": "Bloom Energy",
+          "address": "0x822CC93fFD030293E9842c30BBD678F530701867",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x822cc93ffd030293e9842c30bbd678f530701867.png",
+          "decimals": 18,
+          "referenceAmount": "129432385061345558",
+          "referenceNote": "10,000,000 tokens = 129432385061345558 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "CBRS",
+          "name": "Cerebras Systems",
+          "address": "0x5c90450Bbb4273D7b2f17CF6917AEB237A569679",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x5c90450bbb4273d7b2f17cf6917aeb237a569679.png",
+          "decimals": 18,
+          "referenceAmount": "120120120120120120",
+          "referenceNote": "10,000,000 tokens = 120120120120120120 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "CCL",
+          "name": "Carnival Corporation",
+          "address": "0x9651342CeA770aE9a2969Ba2A52611523146aef9",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x9651342cea770ae9a2969ba2a52611523146aef9.png",
+          "decimals": 18,
+          "referenceAmount": "912374073370081734",
+          "referenceNote": "10,000,000 tokens = 912374073370081734 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "CELH",
+          "name": "Celsius",
+          "address": "0x8cF07C5A878945185d327aAa6e33FAa95F95e7bF",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x8cf07c5a878945185d327aaa6e33faa95f95e7bf.png",
+          "decimals": 18,
+          "referenceAmount": "883489784649364992",
+          "referenceNote": "10,000,000 tokens = 883489784649364992 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "CLSK",
+          "name": "CleanSpark",
+          "address": "0xcBB95BBF36099d34dA091dc6Fa6F49EfA257Cee3",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xcbb95bbf36099d34da091dc6fa6f49efa257cee3.png",
+          "decimals": 18,
+          "referenceAmount": "1659751037344398340",
+          "referenceNote": "10,000,000 tokens = 1659751037344398340 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "COIN",
+          "name": "Coinbase",
+          "address": "0x6330D8C3178a418788dF01a47479c0ce7CCF450b",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x6330d8c3178a418788df01a47479c0ce7ccf450b.png",
+          "decimals": 18,
+          "referenceAmount": "151615654316308159",
+          "referenceNote": "10,000,000 tokens = 151615654316308159 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "COST",
+          "name": "Costco",
+          "address": "0x4EA005168D7F09a7A0Ba9D1DEf21a479950E44C2",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x4ea005168d7f09a7a0ba9d1def21a479950e44c2.png",
+          "decimals": 18,
+          "referenceAmount": "25705839509875327",
+          "referenceNote": "10,000,000 tokens = 25705839509875327 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "CRCL",
+          "name": "Circle Internet Group",
+          "address": "0xdF0992E440dD0be65BD8439b609d6D4366bf1CB5",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xdf0992e440dd0be65bd8439b609d6d4366bf1cb5.png",
+          "decimals": 18,
+          "referenceAmount": "384831235468612202",
+          "referenceNote": "10,000,000 tokens = 384831235468612202 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "CRWD",
+          "name": "CrowdStrike Holdings",
+          "address": "0xea72Ecca2d0f6bFA1394DBBCff85b52CD4233931",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xea72ecca2d0f6bfa1394dbbcff85b52cd4233931.png",
+          "decimals": 18,
+          "referenceAmount": "32786885245901639",
+          "referenceNote": "10,000,000 tokens = 32786885245901639 raw quote units; $24 target using bid/ask midpoint and multiplier 4.000000000000000000"
+        },
+        {
+          "symbol": "CRWV",
+          "name": "CoreWeave",
+          "address": "0x5f10A1C971B69e47e059e1dC91901B59b3fB49C3",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x5f10a1c971b69e47e059e1dc91901b59b3fb49c3.png",
+          "decimals": 18,
+          "referenceAmount": "334471465403107797",
+          "referenceNote": "10,000,000 tokens = 334471465403107797 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "DDOG",
+          "name": "Datadog",
+          "address": "0x27c99fBde9D0d2AA4f4Bfb4943f237843DdF6958",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x27c99fbde9d0d2aa4f4bfb4943f237843ddf6958.png",
+          "decimals": 18,
+          "referenceAmount": "95904095904095904",
+          "referenceNote": "10,000,000 tokens = 95904095904095904 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "DELL",
+          "name": "Dell",
+          "address": "0x941AE714EC6D8130c7B75d67160Ca08f1e7d11Dd",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x941ae714ec6d8130c7b75d67160ca08f1e7d11dd.png",
+          "decimals": 18,
+          "referenceAmount": "54967706472447437",
+          "referenceNote": "10,000,000 tokens = 54967706472447437 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "ELF",
+          "name": "e.l.f. Beauty",
+          "address": "0x39EC44Bee4F6A116c6F9B8De566848a985C53C60",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x39ec44bee4f6a116c6f9b8de566848a985c53c60.png",
+          "decimals": 18,
+          "referenceAmount": "312581401406616306",
+          "referenceNote": "10,000,000 tokens = 312581401406616306 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "EWY",
+          "name": "iShares MSCI South Korea fund",
+          "address": "0x7f0aBeF0C07280F82c6a08ead09dEd6BAE2C13Fc",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x7f0abef0c07280f82c6a08ead09ded6bae2c13fc.png",
+          "decimals": 18,
+          "referenceAmount": "147465437788018433",
+          "referenceNote": "10,000,000 tokens = 147465437788018433 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "F",
+          "name": "Ford Motor",
+          "address": "0x25C288E6D899b9BC30160965aD9644c67e73bE0C",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x25c288e6d899b9bc30160965ad9644c67e73be0c.png",
+          "decimals": 18,
+          "referenceAmount": "1675977653631284916",
+          "referenceNote": "10,000,000 tokens = 1675977653631284916 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "FLNC",
+          "name": "Fluence Energy",
+          "address": "0x282e87451E10fA6679BC7D76C69BE44cD3fC777C",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x282e87451e10fa6679bc7d76c69be44cd3fc777c.png",
+          "decimals": 18,
+          "referenceAmount": "1777119585338763421",
+          "referenceNote": "10,000,000 tokens = 1777119585338763421 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "FUTU",
+          "name": "Futu Holdings",
+          "address": "0xeB30663bDFf0622Ef4e4E5cBb4E975F19f33f51D",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xeb30663bdff0622ef4e4e5cbb4e975f19f33f51d.png",
+          "decimals": 18,
+          "referenceAmount": "241012251456115686",
+          "referenceNote": "10,000,000 tokens = 241012251456115686 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "GLW",
+          "name": "Corning",
+          "address": "0x7c04E6A3368F2A1DE3874f0e80d2e0A1a9915da6",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x7c04e6a3368f2a1de3874f0e80d2e0a1a9915da6.png",
+          "decimals": 18,
+          "referenceAmount": "163121049412084551",
+          "referenceNote": "10,000,000 tokens = 163121049412084551 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "GME",
+          "name": "GameStop",
+          "address": "0x1b0E319c6A659F002271B69dB8A7df2F911c153E",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x1b0e319c6a659f002271b69db8a7df2f911c153e.png",
+          "decimals": 18,
+          "referenceAmount": "1130475741874705605",
+          "referenceNote": "10,000,000 tokens = 1130475741874705605 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "GOOGL",
+          "name": "Alphabet Class A",
+          "address": "0x2e0847E8910a9732eB3fb1bb4b70a580ADAD4FE3",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x2e0847e8910a9732eb3fb1bb4b70a580adad4fe3.png",
+          "decimals": 18,
+          "referenceAmount": "75050424503963601",
+          "referenceNote": "10,000,000 tokens = 75050424503963601 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "INOD",
+          "name": "Innodata",
+          "address": "0xf1953DAB6FaD537488d5A022361FfAa8B4c95eC6",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xf1953dab6fad537488d5a022361ffaa8b4c95ec6.png",
+          "decimals": 18,
+          "referenceAmount": "425985090521831736",
+          "referenceNote": "10,000,000 tokens = 425985090521831736 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "INTC",
+          "name": "Intel",
+          "address": "0xc72b96e0E48ecd4DC75E1e45396e26300BC39681",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xc72b96e0e48ecd4dc75e1e45396e26300bc39681.png",
+          "decimals": 18,
+          "referenceAmount": "260628766900146604",
+          "referenceNote": "10,000,000 tokens = 260628766900146604 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "INTU",
+          "name": "Intuit",
+          "address": "0x56d23beE5f41A7120170b0c603Dae30128e460e9",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x56d23bee5f41a7120170b0c603dae30128e460e9.png",
+          "decimals": 18,
+          "referenceAmount": "81368344323710397",
+          "referenceNote": "10,000,000 tokens = 81368344323710397 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "IONQ",
+          "name": "IonQ",
+          "address": "0x558378E000D634A36593E338eBacdd6207640EfE",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x558378e000d634a36593e338ebacdd6207640efe.png",
+          "decimals": 18,
+          "referenceAmount": "727382936808607365",
+          "referenceNote": "10,000,000 tokens = 727382936808607365 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "IREN",
+          "name": "IREN Limited",
+          "address": "0xF0AB0c93bE6F41369d302e55db1A96b3c430212D",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xf0ab0c93be6f41369d302e55db1a96b3c430212d.png",
+          "decimals": 18,
+          "referenceAmount": "649614291514413317",
+          "referenceNote": "10,000,000 tokens = 649614291514413317 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "LITE",
+          "name": "Lumentum",
+          "address": "0x8eF20885F94e3D9bc7eB3080279188Bd5ED7c08C",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x8ef20885f94e3d9bc7eb3080279188bd5ed7c08c.png",
+          "decimals": 18,
+          "referenceAmount": "31331592689295039",
+          "referenceNote": "10,000,000 tokens = 31331592689295039 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "LLY",
+          "name": "Eli Lilly",
+          "address": "0x8005d266423c7ea827372c9c864491e5786600ea",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x8005d266423c7ea827372c9c864491e5786600ea.png",
+          "decimals": 18,
+          "referenceAmount": "20068567605987123",
+          "referenceNote": "10,000,000 tokens = 20068567605987123 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "LULU",
+          "name": "Lululemon",
+          "address": "0x4e62068525Ab11FE768e29dfD00ef909B9803016",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x4e62068525ab11fe768e29dfd00ef909b9803016.png",
+          "decimals": 18,
+          "referenceAmount": "209790209790209790",
+          "referenceNote": "10,000,000 tokens = 209790209790209790 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "LUNR",
+          "name": "Intuitive Machines",
+          "address": "0xa5D4968421bA94814Be3B136b15cf422101aC1a3",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xa5d4968421ba94814be3b136b15cf422101ac1a3.png",
+          "decimals": 18,
+          "referenceAmount": "1853281853281853282",
+          "referenceNote": "10,000,000 tokens = 1853281853281853282 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "MDB",
+          "name": "MongoDB",
+          "address": "0xDdf2266b79abf0B48898959B0ed6E6adf512be74",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xddf2266b79abf0b48898959b0ed6e6adf512be74.png",
+          "decimals": 18,
+          "referenceAmount": "80733327726852241",
+          "referenceNote": "10,000,000 tokens = 80733327726852241 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "META",
+          "name": "Meta Platforms",
+          "address": "0xc0D6457C16Cc70d6790Dd43521C899C87ce02f35",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xc0d6457c16cc70d6790dd43521c899c87ce02f35.png",
+          "decimals": 18,
+          "referenceAmount": "40258324247253208",
+          "referenceNote": "10,000,000 tokens = 40258324247253208 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "MRVL",
+          "name": "Marvell Technology",
+          "address": "0x62fd0668e10D8B72339BE2DCF7643001688ff13B",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x62fd0668e10d8b72339be2dcf7643001688ff13b.png",
+          "decimals": 18,
+          "referenceAmount": "123902942694889004",
+          "referenceNote": "10,000,000 tokens = 123902942694889004 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "MSFT",
+          "name": "Microsoft",
+          "address": "0xe93237C50D904957Cf27E7B1133b510C669c2e74",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xe93237c50d904957cf27e7b1133b510c669c2e74.png",
+          "decimals": 18,
+          "referenceAmount": "62961554101027060",
+          "referenceNote": "10,000,000 tokens = 62961554101027060 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "MSTR",
+          "name": "Strategy Inc.",
+          "address": "0xec262a75e413fAfD0dF80480274532C79D42da09",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xec262a75e413fafd0df80480274532c79d42da09.png",
+          "decimals": 18,
+          "referenceAmount": "263417846559104379",
+          "referenceNote": "10,000,000 tokens = 263417846559104379 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "MU",
+          "name": "Micron Technology",
+          "address": "0xfF080c8ce2E5feadaCa0Da81314Ae59D232d4afD",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xff080c8ce2e5feadaca0da81314ae59d232d4afd.png",
+          "decimals": 18,
+          "referenceAmount": "26037175598188306",
+          "referenceNote": "10,000,000 tokens = 26037175598188306 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000074823219171086"
+        },
+        {
+          "symbol": "MXL",
+          "name": "MaxLinear",
+          "address": "0x48961813349333209994750ffA89b3c5C22eC969",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x48961813349333209994750ffa89b3c5c22ec969.png",
+          "decimals": 18,
+          "referenceAmount": "332179930795847751",
+          "referenceNote": "10,000,000 tokens = 332179930795847751 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "NBIS",
+          "name": "Nebius Group",
+          "address": "0x9D9c6684F596F66a64C030B93A886D51Fd4D7931",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x9d9c6684f596f66a64c030b93a886d51fd4d7931.png",
+          "decimals": 18,
+          "referenceAmount": "126779535669950609",
+          "referenceNote": "10,000,000 tokens = 126779535669950609 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "NFLX",
+          "name": "Netflix",
+          "address": "0xE0444EF8BF4eD74f74FD73686e2ddF4C1c5591E8",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xe0444ef8bf4ed74f74fd73686e2ddf4c1c5591e8.png",
+          "decimals": 18,
+          "referenceAmount": "342050880068410176",
+          "referenceNote": "10,000,000 tokens = 342050880068410176 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "NNE",
+          "name": "Nano Nuclear Energy",
+          "address": "0xBEF75684C43c4ea7BD18Dd532a2244674Ee8b926",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xbef75684c43c4ea7bd18dd532a2244674ee8b926.png",
+          "decimals": 18,
+          "referenceAmount": "1534526854219948849",
+          "referenceNote": "10,000,000 tokens = 1534526854219948849 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "NOW",
+          "name": "ServiceNow",
+          "address": "0x0C3260aF4B8f13a69c4c2dFb84fD667890CDFa14",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x0c3260af4b8f13a69c4c2dfb84fd667890cdfa14.png",
+          "decimals": 18,
+          "referenceAmount": "244200244200244200",
+          "referenceNote": "10,000,000 tokens = 244200244200244200 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "NU",
+          "name": "Nu",
+          "address": "0x408c14038a04f7bD235329E26d2bf569ee20e250",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x408c14038a04f7bd235329e26d2bf569ee20e250.png",
+          "decimals": 18,
+          "referenceAmount": "1706363313188766442",
+          "referenceNote": "10,000,000 tokens = 1706363313188766442 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "NVDA",
+          "name": "NVIDIA",
+          "address": "0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec.png",
+          "decimals": 18,
+          "referenceAmount": "115995263526739325",
+          "referenceNote": "10,000,000 tokens = 115995263526739325 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "NVTS",
+          "name": "Navitas Semiconductor",
+          "address": "0xbE6702d7b70315376dC48a3293f24f0982F86386",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xbe6702d7b70315376dc48a3293f24f0982f86386.png",
+          "decimals": 18,
+          "referenceAmount": "2187784867821330902",
+          "referenceNote": "10,000,000 tokens = 2187784867821330902 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "ORCL",
+          "name": "Oracle",
+          "address": "0xb0992820E760d836549ba69BC7598b4af75dEE03",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xb0992820e760d836549ba69bc7598b4af75dee03.png",
+          "decimals": 18,
+          "referenceAmount": "208469055374592834",
+          "referenceNote": "10,000,000 tokens = 208469055374592834 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "P",
+          "name": "Everpure",
+          "address": "0x1Cdad396DB64BDa184d5182A97Dd9B3C62100b7D",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x1cdad396db64bda184d5182a97dd9b3c62100b7d.png",
+          "decimals": 18,
+          "referenceAmount": "319701611828959638",
+          "referenceNote": "10,000,000 tokens = 319701611828959638 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "PENG",
+          "name": "Penguin Solutions",
+          "address": "0x9b23573b156B52565012F5cE02CDF60AFBaa70Be",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x9b23573b156b52565012f5ce02cdf60afbaa70be.png",
+          "decimals": 18,
+          "referenceAmount": "442192538000921234",
+          "referenceNote": "10,000,000 tokens = 442192538000921234 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "PLTR",
+          "name": "Palantir Technologies",
+          "address": "0x894E1EC2D74FFE5AEF8Dc8A9e84686acCB964F2A",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x894e1ec2d74ffe5aef8dc8a9e84686accb964f2a.png",
+          "decimals": 18,
+          "referenceAmount": "195320447609359105",
+          "referenceNote": "10,000,000 tokens = 195320447609359105 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "POET",
+          "name": "POET Technologies",
+          "address": "0xcf6B2D875361be807EAfa57458c80f28521F9333",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xcf6b2d875361be807eafa57458c80f28521f9333.png",
+          "decimals": 18,
+          "referenceAmount": "3468208092485549133",
+          "referenceNote": "10,000,000 tokens = 3468208092485549133 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "PR",
+          "name": "Permian Resources",
+          "address": "0x4189F0c66EBBB0bfeF1C31f763131361EF32f77C",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x4189f0c66ebbb0bfef1c31f763131361ef32f77c.png",
+          "decimals": 18,
+          "referenceAmount": "1109313612202449734",
+          "referenceNote": "10,000,000 tokens = 1109313612202449734 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "QBTS",
+          "name": "D-Wave Quantum",
+          "address": "0xC583c60aeF9Dc401Da72cEC1B404743a93cea1Cc",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xc583c60aef9dc401da72cec1b404743a93cea1cc.png",
+          "decimals": 18,
+          "referenceAmount": "1481024375192841716",
+          "referenceNote": "10,000,000 tokens = 1481024375192841716 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "QCOM",
+          "name": "Qualcomm",
+          "address": "0x0f17206447090e464C277571124dD2688E48AEA9",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x0f17206447090e464c277571124dd2688e48aea9.png",
+          "decimals": 18,
+          "referenceAmount": "143902146540352560",
+          "referenceNote": "10,000,000 tokens = 143902146540352560 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "QQQ",
+          "name": "Invesco QQQ",
+          "address": "0xD5f3879160bc7c32ebb4dC785F8a4F505888de68",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xd5f3879160bc7c32ebb4dc785f8a4f505888de68.png",
+          "decimals": 18,
+          "referenceAmount": "35086693371538844",
+          "referenceNote": "10,000,000 tokens = 35086693371538844 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "QUBT",
+          "name": "Quantum Computing",
+          "address": "0x59818904ab4cE163b3cE4FfB64f2D6Ca02c434B4",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x59818904ab4ce163b3ce4ffb64f2d6ca02c434b4.png",
+          "decimals": 18,
+          "referenceAmount": "3223640026863666891",
+          "referenceNote": "10,000,000 tokens = 3223640026863666891 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "RBLX",
+          "name": "Roblox",
+          "address": "0xF0C4BF4C582cb3836e98394b1d4e7B7281101bE8",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xf0c4bf4c582cb3836e98394b1d4e7b7281101be8.png",
+          "decimals": 18,
+          "referenceAmount": "501829587036069002",
+          "referenceNote": "10,000,000 tokens = 501829587036069002 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "RDDT",
+          "name": "Reddit",
+          "address": "0x05b37Fb53A299a1b874A619e1c4C404D52C36F4C",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x05b37fb53a299a1b874a619e1c4c404d52c36f4c.png",
+          "decimals": 18,
+          "referenceAmount": "142433234421364985",
+          "referenceNote": "10,000,000 tokens = 142433234421364985 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "RDW",
+          "name": "Redwire",
+          "address": "0x92Ef19E82bD8fF36661DE838D5eaE7e5CEF0EfFE",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x92ef19e82bd8ff36661de838d5eae7e5cef0effe.png",
+          "decimals": 18,
+          "referenceAmount": "2769763416041546451",
+          "referenceNote": "10,000,000 tokens = 2769763416041546451 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "RGTI",
+          "name": "Rigetti Computing",
+          "address": "0x284358abc07F9359f19f4b5b4aC91901Be2597Ba",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x284358abc07f9359f19f4b5b4ac91901be2597ba.png",
+          "decimals": 18,
+          "referenceAmount": "1688357368976433345",
+          "referenceNote": "10,000,000 tokens = 1688357368976433345 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "RIVN",
+          "name": "Rivian Automotive",
+          "address": "0xB1BF26c1D20ff267A4f93550d1E0d06ac40a114B",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xb1bf26c1d20ff267a4f93550d1e0d06ac40a114b.png",
+          "decimals": 18,
+          "referenceAmount": "1515629933691190401",
+          "referenceNote": "10,000,000 tokens = 1515629933691190401 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "RKLB",
+          "name": "Rocket Lab Corporation",
+          "address": "0x3b14C39E89D60D627b42a1A4CA45b5bb45Fc12e2",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x3b14c39e89d60d627b42a1a4ca45b5bb45fc12e2.png",
+          "decimals": 18,
+          "referenceAmount": "374327380488185292",
+          "referenceNote": "10,000,000 tokens = 374327380488185292 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "SATS",
+          "name": "EchoStar",
+          "address": "0x95052ddcd5DC25641657424A8Cf04834997E1730",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x95052ddcd5dc25641657424a8cf04834997e1730.png",
+          "decimals": 18,
+          "referenceAmount": "273379655997266203",
+          "referenceNote": "10,000,000 tokens = 273379655997266203 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "SGOV",
+          "name": "iShares 0-3 Month Treasury Bond",
+          "address": "0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x92fd66527192e3e61d4ddd13322aa222de86f9b5.png",
+          "decimals": 18,
+          "referenceAmount": "238257480059930012",
+          "referenceNote": "10,000,000 tokens = 238257480059930012 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000957519890990718"
+        },
+        {
+          "symbol": "SHOP",
+          "name": "Shopify",
+          "address": "0xF53F66751B1Eff985311b693531E3290F600c410",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xf53f66751b1eff985311b693531e3290f600c410.png",
+          "decimals": 18,
+          "referenceAmount": "211063231026294961",
+          "referenceNote": "10,000,000 tokens = 211063231026294961 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "SKHY",
+          "name": "SK hynix Inc. American Depositary Shares",
+          "address": "0x84CAb63bc87912E71ad199ff14A0bA45de68FeF8",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x84cab63bc87912e71ad199ff14a0ba45de68fef8.png",
+          "decimals": 18,
+          "referenceAmount": "154684025651767587",
+          "referenceNote": "10,000,000 tokens = 154684025651767587 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "SLV",
+          "name": "iShares Silver Trust",
+          "address": "0x411eFb0E7f985935DAec3D4C3ebaEa0d0AD7D89f",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x411efb0e7f985935daec3d4c3ebaea0d0ad7d89f.png",
+          "decimals": 18,
+          "referenceAmount": "456707897240723121",
+          "referenceNote": "10,000,000 tokens = 456707897240723121 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "SMCI",
+          "name": "Super Micro Computer",
+          "address": "0xc01aA1fECeC0605b13bc84874ff7256C0f5F562a",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xc01aa1fecec0605b13bc84874ff7256c0f5f562a.png",
+          "decimals": 18,
+          "referenceAmount": "795228628230616302",
+          "referenceNote": "10,000,000 tokens = 795228628230616302 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "SNDK",
+          "name": "Sandisk Corporation",
+          "address": "0xB90A19fF0Af67f7779afF50A882A9CfF42446400",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xb90a19ff0af67f7779aff50a882a9cff42446400.png",
+          "decimals": 18,
+          "referenceAmount": "16708903060514077",
+          "referenceNote": "10,000,000 tokens = 16708903060514077 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "SOFI",
+          "name": "SoFi Technologies",
+          "address": "0x98E75885157C80992A8D41b696D8c9C6Fb30A926",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x98e75885157c80992a8d41b696d8c9c6fb30a926.png",
+          "decimals": 18,
+          "referenceAmount": "1456310679611650485",
+          "referenceNote": "10,000,000 tokens = 1456310679611650485 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "SOXX",
+          "name": "iShares Semiconductor ETF",
+          "address": "0x75742c18BC1f1C5c5f448f4C9D9C6F66dafAAa38",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x75742c18bc1f1c5c5f448f4c9d9c6f66dafaaa38.png",
+          "decimals": 18,
+          "referenceAmount": "45465309022022259",
+          "referenceNote": "10,000,000 tokens = 45465309022022259 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "SPCX",
+          "name": "Space Exploration Technologies Corp. Class A Common Stock",
+          "address": "0x4a0E65A3EcceC6dBe60AE065F2e7bb85Fae35eEa",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x4a0e65a3eccec6dbe60ae065f2e7bb85fae35eea.png",
+          "decimals": 18,
+          "referenceAmount": "208831846856645638",
+          "referenceNote": "10,000,000 tokens = 208831846856645638 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "SPMO",
+          "name": "Invesco S&P 500 Momentum ETF",
+          "address": "0xAd622320e520de39e72d41EF07438C3Fd3354875",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xad622320e520de39e72d41ef07438c3fd3354875.png",
+          "decimals": 18,
+          "referenceAmount": "164153072740330358",
+          "referenceNote": "10,000,000 tokens = 164153072740330358 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "SPY",
+          "name": "SPDR S&P 500 ETF Trust",
+          "address": "0x117cc2133c37B721F49dE2A7a74833232B3B4C0C",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x117cc2133c37b721f49de2a7a74833232b3b4c0c.png",
+          "decimals": 18,
+          "referenceAmount": "32498527410476713",
+          "referenceNote": "10,000,000 tokens = 32498527410476713 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "TSEM",
+          "name": "Tower Semiconductor",
+          "address": "0x89776d4Cd68193597A2fC132cfaC1fDe36CCeA8a",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x89776d4cd68193597a2fc132cfac1fde36ccea8a.png",
+          "decimals": 18,
+          "referenceAmount": "102669404517453799",
+          "referenceNote": "10,000,000 tokens = 102669404517453799 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "TSLA",
+          "name": "Tesla",
+          "address": "0x322F0929c4625eD5bAd873c95208D54E1c003b2d",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x322f0929c4625ed5bad873c95208d54e1c003b2d.png",
+          "decimals": 18,
+          "referenceAmount": "76611229929453826",
+          "referenceNote": "10,000,000 tokens = 76611229929453826 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "TSM",
+          "name": "Taiwan Semiconductor Manufacturing",
+          "address": "0x58FfE4a942d3885bAa22D7520691F611EF09e7AA",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x58ffe4a942d3885baa22d7520691f611ef09e7aa.png",
+          "decimals": 18,
+          "referenceAmount": "59553349875930521",
+          "referenceNote": "10,000,000 tokens = 59553349875930521 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "TTWO",
+          "name": "Take-Two Interactive Software",
+          "address": "0x5e81213613b6B86EaB4c6c50d718d34359459786",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x5e81213613b6b86eab4c6c50d718d34359459786.png",
+          "decimals": 18,
+          "referenceAmount": "103228026409170090",
+          "referenceNote": "10,000,000 tokens = 103228026409170090 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "UMC",
+          "name": "United Microelectronics",
+          "address": "0x0E6e67Ba88e7b5d9B67636A215c76779B948dE79",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x0e6e67ba88e7b5d9b67636a215c76779b948de79.png",
+          "decimals": 18,
+          "referenceAmount": "1240630653915740501",
+          "referenceNote": "10,000,000 tokens = 1240630653915740501 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "UPS",
+          "name": "UPS",
+          "address": "0xf23250dac154D05Bb671CB0d0eBEf3c635c79CE2",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xf23250dac154d05bb671cb0d0ebef3c635c79ce2.png",
+          "decimals": 18,
+          "referenceAmount": "209168554993899250",
+          "referenceNote": "10,000,000 tokens = 209168554993899250 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "USAR",
+          "name": "USA Rare Earth",
+          "address": "0xd917B029C761D264c6A312BBbcDA868658eF86a6",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xd917b029c761d264c6a312bbbcda868658ef86a6.png",
+          "decimals": 18,
+          "referenceAmount": "1690736174709404720",
+          "referenceNote": "10,000,000 tokens = 1690736174709404720 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "USO",
+          "name": "United States Oil Fund",
+          "address": "0xa30FA36Db767ad9eD3f7a60fC79526fB4d56D344",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xa30fa36db767ad9ed3f7a60fc79526fb4d56d344.png",
+          "decimals": 18,
+          "referenceAmount": "175041937130770914",
+          "referenceNote": "10,000,000 tokens = 175041937130770914 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "WDAY",
+          "name": "Workday",
+          "address": "0x82DA4646242e1D962e96e932269Dc644c94a9CaA",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x82da4646242e1d962e96e932269dc644c94a9caa.png",
+          "decimals": 18,
+          "referenceAmount": "177449168207024030",
+          "referenceNote": "10,000,000 tokens = 177449168207024030 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "XLK",
+          "name": "State Street Technology Select Sector SPDR ETF",
+          "address": "0x15Cd20759CE7F3285c29A319dE2D1A2e098c6f43",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x15cd20759ce7f3285c29a319de2d1a2e098c6f43.png",
+          "decimals": 18,
+          "referenceAmount": "136293940598557556",
+          "referenceNote": "10,000,000 tokens = 136293940598557556 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "XNDU",
+          "name": "Xanadu Quantum",
+          "address": "0xA8eB3BCcbf2017eE7CBfb652eB51CF2E1B153289",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xa8eb3bccbf2017ee7cbfb652eb51cf2e1b153289.png",
+          "decimals": 18,
+          "referenceAmount": "2339181286549707602",
+          "referenceNote": "10,000,000 tokens = 2339181286549707602 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "XOM",
+          "name": "ExxonMobil Holdings Corporation",
+          "address": "0xf9B46d3D1B22199D4D1025a9cEDB540A33F1a2d5",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0xf9b46d3d1b22199d4d1025a9cedb540a33f1a2d5.png",
+          "decimals": 18,
+          "referenceAmount": "152545604779762283",
+          "referenceNote": "10,000,000 tokens = 152545604779762283 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "ZM",
+          "name": "Zoom",
+          "address": "0x44c4F142009036cF477eD2d09932051843137CF1",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x44c4f142009036cf477ed2d09932051843137cf1.png",
+          "decimals": 18,
+          "referenceAmount": "273301827705972784",
+          "referenceNote": "10,000,000 tokens = 273301827705972784 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        },
+        {
+          "symbol": "ZS",
+          "name": "Zscaler",
+          "address": "0x7dc013eB55e436f30d7ED1AFE4E36d6e45e3c3f7",
+          "logoUrl": "https://cdn.robinhood.com/ncw_assets/logos/0x7dc013eb55e436f30d7ed1afe4e36d6e45e3c3f7.png",
+          "decimals": 18,
+          "referenceAmount": "169312169312169312",
+          "referenceNote": "10,000,000 tokens = 169312169312169312 raw quote units; $24 target using bid/ask midpoint and multiplier 1.000000000000000000"
+        }
+      ]
+    },
+    "46630": {
+      "name": "Robinhood Chain Testnet",
+      "mock": true,
+      "tokens": [
+        {
+          "symbol": "mAAOI",
+          "name": "Mock Applied Optoelectronics",
+          "address": "0x0296f4310b5d813b22E43725E56064dEcFA94c5a",
+          "decimals": 18,
+          "referenceAmount": "193158953722333984",
+          "referenceNote": "mirrors mainnet AAOI pricing"
+        },
+        {
+          "symbol": "mAAPL",
+          "name": "Mock Apple",
+          "address": "0x19e4F17B4f43c8764eE8A0DD03EA9567850ef971",
+          "decimals": 18,
+          "referenceAmount": "74875986647115728",
+          "referenceNote": "mirrors mainnet AAPL pricing"
+        },
+        {
+          "symbol": "mAMAT",
+          "name": "Mock Applied Materials",
+          "address": "0xC852e3Bc01DB23Cf70D0a5CDa37122d2B040Aabc",
+          "decimals": 18,
+          "referenceAmount": "41729695894841160",
+          "referenceNote": "mirrors mainnet AMAT pricing"
+        },
+        {
+          "symbol": "mAMD",
+          "name": "Mock AMD",
+          "address": "0x924b06578692AcE8815128d140109a2409833239",
+          "decimals": 18,
+          "referenceAmount": "43999560004399952",
+          "referenceNote": "mirrors mainnet AMD pricing"
+        },
+        {
+          "symbol": "mAMZN",
+          "name": "Mock Amazon",
+          "address": "0x2aF24884d6125941f02414B3F1981EFCAD307fb0",
+          "decimals": 18,
+          "referenceAmount": "102271274555759152",
+          "referenceNote": "mirrors mainnet AMZN pricing"
+        },
+        {
+          "symbol": "mAPLD",
+          "name": "Mock Applied Digital",
+          "address": "0xD12e3cC63F1d7A4aAF9607aD7d1A6F048B25A5Ef",
+          "decimals": 18,
+          "referenceAmount": "800000000000000000",
+          "referenceNote": "mirrors mainnet APLD pricing"
+        },
+        {
+          "symbol": "mASML",
+          "name": "Mock ASML Holding NV",
+          "address": "0xb5364B81040AFF941Ac1ed5d91f836fD3Dc0DEf4",
+          "decimals": 18,
+          "referenceAmount": "13287638620521650",
+          "referenceNote": "mirrors mainnet ASML pricing"
+        },
+        {
+          "symbol": "mASTS",
+          "name": "Mock AST SpaceMobile",
+          "address": "0x52e6166Ede93108d86b329c469654f3E0567e16d",
+          "decimals": 18,
+          "referenceAmount": "405063291139240512",
+          "referenceNote": "mirrors mainnet ASTS pricing"
+        },
+        {
+          "symbol": "mAVGO",
+          "name": "Mock Broadcom",
+          "address": "0xD39Cbe043739704499754e0EC3097cec78fd7291",
+          "decimals": 18,
+          "referenceAmount": "61327745694281192",
+          "referenceNote": "mirrors mainnet AVGO pricing"
+        },
+        {
+          "symbol": "mBA",
+          "name": "Mock Boeing",
+          "address": "0xBeCFe6Ea3663691956Eda0015705D65417c65Bb3",
+          "decimals": 18,
+          "referenceAmount": "115052732502396928",
+          "referenceNote": "mirrors mainnet BA pricing"
+        },
+        {
+          "symbol": "mBABA",
+          "name": "Mock Alibaba",
+          "address": "0x86C9d2398DbA313B18a4CDb072B641A6EEFDD9C6",
+          "decimals": 18,
+          "referenceAmount": "214803544258480256",
+          "referenceNote": "mirrors mainnet BABA pricing"
+        },
+        {
+          "symbol": "mBE",
+          "name": "Mock Bloom Energy",
+          "address": "0x16eA631450c345e9242B04180C9CD28dFd87945C",
+          "decimals": 18,
+          "referenceAmount": "107085489916116368",
+          "referenceNote": "mirrors mainnet BE pricing"
+        },
+        {
+          "symbol": "mCBRS",
+          "name": "Mock Cerebras Systems",
+          "address": "0xa4dcc34718540734716463f7c45628dF4C608a22",
+          "decimals": 18,
+          "referenceAmount": "113335851907820176",
+          "referenceNote": "mirrors mainnet CBRS pricing"
+        },
+        {
+          "symbol": "mCCL",
+          "name": "Mock Carnival Corporation",
+          "address": "0x63a6cCF64979BFB43105e6BBAcAd0410846C7D4E",
+          "decimals": 18,
+          "referenceAmount": "918836140888208256",
+          "referenceNote": "mirrors mainnet CCL pricing"
+        },
+        {
+          "symbol": "mCELH",
+          "name": "Mock Celsius",
+          "address": "0xabF98754B8187CCf21825561e394C9b821df8DD7",
+          "decimals": 18,
+          "referenceAmount": "872410032715376256",
+          "referenceNote": "mirrors mainnet CELH pricing"
+        },
+        {
+          "symbol": "mCLSK",
+          "name": "Mock CleanSpark",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1527689369828134912",
+          "referenceNote": "mirrors mainnet CLSK pricing"
+        },
+        {
+          "symbol": "mCOIN",
+          "name": "Mock Coinbase",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "146726172280980608",
+          "referenceNote": "mirrors mainnet COIN pricing"
+        },
+        {
+          "symbol": "mCOST",
+          "name": "Mock Costco",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "26504693539480948",
+          "referenceNote": "mirrors mainnet COST pricing"
+        },
+        {
+          "symbol": "mCRCL",
+          "name": "Mock Circle Internet Group",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "384122919334186944",
+          "referenceNote": "mirrors mainnet CRCL pricing"
+        },
+        {
+          "symbol": "mCRWV",
+          "name": "Mock CoreWeave",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "297103243377073536",
+          "referenceNote": "mirrors mainnet CRWV pricing"
+        },
+        {
+          "symbol": "mDDOG",
+          "name": "Mock Datadog",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "98368718747438320",
+          "referenceNote": "mirrors mainnet DDOG pricing"
+        },
+        {
+          "symbol": "mDELL",
+          "name": "Mock Dell",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "54624908958485072",
+          "referenceNote": "mirrors mainnet DELL pricing"
+        },
+        {
+          "symbol": "mELF",
+          "name": "Mock e.l.f. Beauty",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "314877984780897408",
+          "referenceNote": "mirrors mainnet ELF pricing"
+        },
+        {
+          "symbol": "mEWY",
+          "name": "Mock iShares MSCI South Korea fund",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "137197736237352064",
+          "referenceNote": "mirrors mainnet EWY pricing"
+        },
+        {
+          "symbol": "mF",
+          "name": "Mock Ford Motor",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1675977653631284992",
+          "referenceNote": "mirrors mainnet F pricing"
+        },
+        {
+          "symbol": "mFLNC",
+          "name": "Mock Fluence Energy",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1623815967523680768",
+          "referenceNote": "mirrors mainnet FLNC pricing"
+        },
+        {
+          "symbol": "mFUTU",
+          "name": "Mock Futu Holdings",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "243555916379135360",
+          "referenceNote": "mirrors mainnet FUTU pricing"
+        },
+        {
+          "symbol": "mGLW",
+          "name": "Mock Corning",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "152052711606690304",
+          "referenceNote": "mirrors mainnet GLW pricing"
+        },
+        {
+          "symbol": "mGME",
+          "name": "Mock GameStop",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1127289807421324672",
+          "referenceNote": "mirrors mainnet GME pricing"
+        },
+        {
+          "symbol": "mGOOGL",
+          "name": "Mock Alphabet Class A",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "74857303265649856",
+          "referenceNote": "mirrors mainnet GOOGL pricing"
+        },
+        {
+          "symbol": "mINOD",
+          "name": "Mock Innodata",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "366021046210157120",
+          "referenceNote": "mirrors mainnet INOD pricing"
+        },
+        {
+          "symbol": "mINTC",
+          "name": "Mock Intel",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "232175679597562144",
+          "referenceNote": "mirrors mainnet INTC pricing"
+        },
+        {
+          "symbol": "mINTU",
+          "name": "Mock Intuit",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "85103365128896144",
+          "referenceNote": "mirrors mainnet INTU pricing"
+        },
+        {
+          "symbol": "mIONQ",
+          "name": "Mock IonQ",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "695249130938586368",
+          "referenceNote": "mirrors mainnet IONQ pricing"
+        },
+        {
+          "symbol": "mIREN",
+          "name": "Mock IREN Limited",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "568585643212508800",
+          "referenceNote": "mirrors mainnet IREN pricing"
+        },
+        {
+          "symbol": "mLITE",
+          "name": "Mock Lumentum",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "28766630708378284",
+          "referenceNote": "mirrors mainnet LITE pricing"
+        },
+        {
+          "symbol": "mLLY",
+          "name": "Mock Eli Lilly",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "20245647185855040",
+          "referenceNote": "mirrors mainnet LLY pricing"
+        },
+        {
+          "symbol": "mLULU",
+          "name": "Mock Lululemon",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "217115976117242624",
+          "referenceNote": "mirrors mainnet LULU pricing"
+        },
+        {
+          "symbol": "mLUNR",
+          "name": "Mock Intuitive Machines",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1683029453015427840",
+          "referenceNote": "mirrors mainnet LUNR pricing"
+        },
+        {
+          "symbol": "mMDB",
+          "name": "Mock MongoDB",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "80482897384305840",
+          "referenceNote": "mirrors mainnet MDB pricing"
+        },
+        {
+          "symbol": "mMETA",
+          "name": "Mock Meta Platforms",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "39509424644003616",
+          "referenceNote": "mirrors mainnet META pricing"
+        },
+        {
+          "symbol": "mMRVL",
+          "name": "Mock Marvell Technology",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "114449213161659520",
+          "referenceNote": "mirrors mainnet MRVL pricing"
+        },
+        {
+          "symbol": "mMSFT",
+          "name": "Mock Microsoft",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "62774639045825488",
+          "referenceNote": "mirrors mainnet MSFT pricing"
+        },
+        {
+          "symbol": "mMSTR",
+          "name": "Mock Strategy Inc.",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "230902443717529344",
+          "referenceNote": "mirrors mainnet MSTR pricing"
+        },
+        {
+          "symbol": "mMU",
+          "name": "Mock Micron Technology",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "24294694646056668",
+          "referenceNote": "mirrors mainnet MU pricing"
+        },
+        {
+          "symbol": "mMXL",
+          "name": "Mock MaxLinear",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "261580381471389632",
+          "referenceNote": "mirrors mainnet MXL pricing"
+        },
+        {
+          "symbol": "mNBIS",
+          "name": "Mock Nebius Group",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "101673374285109088",
+          "referenceNote": "mirrors mainnet NBIS pricing"
+        },
+        {
+          "symbol": "mNFLX",
+          "name": "Mock Netflix",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "343987387129138624",
+          "referenceNote": "mirrors mainnet NFLX pricing"
+        },
+        {
+          "symbol": "mNNE",
+          "name": "Mock Nano Nuclear Energy",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1262493424513413888",
+          "referenceNote": "mirrors mainnet NNE pricing"
+        },
+        {
+          "symbol": "mNOW",
+          "name": "Mock ServiceNow",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "253137854656681760",
+          "referenceNote": "mirrors mainnet NOW pricing"
+        },
+        {
+          "symbol": "mNU",
+          "name": "Mock Nu",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1714285714285714176",
+          "referenceNote": "mirrors mainnet NU pricing"
+        },
+        {
+          "symbol": "mNVDA",
+          "name": "Mock NVIDIA",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "115196313717961024",
+          "referenceNote": "mirrors mainnet NVDA pricing"
+        },
+        {
+          "symbol": "mNVTS",
+          "name": "Mock Navitas Semiconductor",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1963993453355155200",
+          "referenceNote": "mirrors mainnet NVTS pricing"
+        },
+        {
+          "symbol": "mORCL",
+          "name": "Mock Oracle",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "193626462283178688",
+          "referenceNote": "mirrors mainnet ORCL pricing"
+        },
+        {
+          "symbol": "mP",
+          "name": "Mock Everpure",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "338361765120541312",
+          "referenceNote": "mirrors mainnet P pricing"
+        },
+        {
+          "symbol": "mPENG",
+          "name": "Mock Penguin Solutions",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "403022670025188928",
+          "referenceNote": "mirrors mainnet PENG pricing"
+        },
+        {
+          "symbol": "mPLTR",
+          "name": "Mock Palantir Technologies",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "196979645436638208",
+          "referenceNote": "mirrors mainnet PLTR pricing"
+        },
+        {
+          "symbol": "mPOET",
+          "name": "Mock POET Technologies",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "3137254901960784384",
+          "referenceNote": "mirrors mainnet POET pricing"
+        },
+        {
+          "symbol": "mPR",
+          "name": "Mock Permian Resources",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1099908340971585792",
+          "referenceNote": "mirrors mainnet PR pricing"
+        },
+        {
+          "symbol": "mQBTS",
+          "name": "Mock D-Wave Quantum",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1419278533412182016",
+          "referenceNote": "mirrors mainnet QBTS pricing"
+        },
+        {
+          "symbol": "mQCOM",
+          "name": "Mock Qualcomm",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "141835588913184784",
+          "referenceNote": "mirrors mainnet QCOM pricing"
+        },
+        {
+          "symbol": "mQQQ",
+          "name": "Mock Invesco QQQ",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "34559225873340432",
+          "referenceNote": "mirrors mainnet QQQ pricing"
+        },
+        {
+          "symbol": "mQUBT",
+          "name": "Mock Quantum Computing",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "3065134099616858112",
+          "referenceNote": "mirrors mainnet QUBT pricing"
+        },
+        {
+          "symbol": "mRBLX",
+          "name": "Mock Roblox",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "501882057716436672",
+          "referenceNote": "mirrors mainnet RBLX pricing"
+        },
+        {
+          "symbol": "mRDDT",
+          "name": "Mock Reddit",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "159214541594798976",
+          "referenceNote": "mirrors mainnet RDDT pricing"
+        },
+        {
+          "symbol": "mRDW",
+          "name": "Mock Redwire",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "2561366061899680256",
+          "referenceNote": "mirrors mainnet RDW pricing"
+        },
+        {
+          "symbol": "mRGTI",
+          "name": "Mock Rigetti Computing",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1568627450980392192",
+          "referenceNote": "mirrors mainnet RGTI pricing"
+        },
+        {
+          "symbol": "mRIVN",
+          "name": "Mock Rivian Automotive",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1451905626134301184",
+          "referenceNote": "mirrors mainnet RIVN pricing"
+        },
+        {
+          "symbol": "mRKLB",
+          "name": "Mock Rocket Lab Corporation",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "345373435026622528",
+          "referenceNote": "mirrors mainnet RKLB pricing"
+        },
+        {
+          "symbol": "mSATS",
+          "name": "Mock EchoStar",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "240698024270384128",
+          "referenceNote": "mirrors mainnet SATS pricing"
+        },
+        {
+          "symbol": "mSGOV",
+          "name": "Mock iShares 0-3 Month Treasury Bond ETF",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "238308013106940736",
+          "referenceNote": "mirrors mainnet SGOV pricing"
+        },
+        {
+          "symbol": "mSHOP",
+          "name": "Mock Shopify",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "213087099351860064",
+          "referenceNote": "mirrors mainnet SHOP pricing"
+        },
+        {
+          "symbol": "mSLV",
+          "name": "Mock iShares Silver Trust",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "458365164247517248",
+          "referenceNote": "mirrors mainnet SLV pricing"
+        },
+        {
+          "symbol": "mSMCI",
+          "name": "Mock Super Micro Computer",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "776447751536719488",
+          "referenceNote": "mirrors mainnet SMCI pricing"
+        },
+        {
+          "symbol": "mSNDK",
+          "name": "Mock Sandisk Corporation",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "14784971076900330",
+          "referenceNote": "mirrors mainnet SNDK pricing"
+        },
+        {
+          "symbol": "mSOFI",
+          "name": "Mock SoFi Technologies",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1431127012522361344",
+          "referenceNote": "mirrors mainnet SOFI pricing"
+        },
+        {
+          "symbol": "mSOXX",
+          "name": "Mock iShares Semiconductor ETF",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "43628431194328296",
+          "referenceNote": "mirrors mainnet SOXX pricing"
+        },
+        {
+          "symbol": "mSPCX",
+          "name": "Mock Space Exploration Technologies Corp",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "206256445513922304",
+          "referenceNote": "mirrors mainnet SPCX pricing"
+        },
+        {
+          "symbol": "mSPMO",
+          "name": "Mock Invesco S&P 500 Momentum ETF",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "159056266154152064",
+          "referenceNote": "mirrors mainnet SPMO pricing"
+        },
+        {
+          "symbol": "mSPY",
+          "name": "Mock SPDR S&P 500 ETF Trust",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "32453044501237276",
+          "referenceNote": "mirrors mainnet SPY pricing"
+        },
+        {
+          "symbol": "mTSEM",
+          "name": "Mock Tower Semiconductor",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "92073966086089136",
+          "referenceNote": "mirrors mainnet TSEM pricing"
+        },
+        {
+          "symbol": "mTSLA",
+          "name": "Mock Tesla",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "74014679578116336",
+          "referenceNote": "mirrors mainnet TSLA pricing"
+        },
+        {
+          "symbol": "mTSM",
+          "name": "Mock Taiwan Semiconductor Manufacturing",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "56990881458966568",
+          "referenceNote": "mirrors mainnet TSM pricing"
+        },
+        {
+          "symbol": "mTTWO",
+          "name": "Mock Take-Two Interactive Software",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "104248110502997136",
+          "referenceNote": "mirrors mainnet TTWO pricing"
+        },
+        {
+          "symbol": "mUMC",
+          "name": "Mock United Microelectronics",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1151631477927063296",
+          "referenceNote": "mirrors mainnet UMC pricing"
+        },
+        {
+          "symbol": "mUPS",
+          "name": "Mock UPS",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "209478921183555904",
+          "referenceNote": "mirrors mainnet UPS pricing"
+        },
+        {
+          "symbol": "mUSAR",
+          "name": "Mock USA Rare Earth",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "1601067378252167936",
+          "referenceNote": "mirrors mainnet USAR pricing"
+        },
+        {
+          "symbol": "mUSO",
+          "name": "Mock United States Oil Fund",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "171025440034205088",
+          "referenceNote": "mirrors mainnet USO pricing"
+        },
+        {
+          "symbol": "mWDAY",
+          "name": "Mock Workday",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "184757505773672064",
+          "referenceNote": "mirrors mainnet WDAY pricing"
+        },
+        {
+          "symbol": "mXLK",
+          "name": "Mock State Street Technology Select Sector SPDR ETF",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "134198165958398560",
+          "referenceNote": "mirrors mainnet XLK pricing"
+        },
+        {
+          "symbol": "mXNDU",
+          "name": "Mock Xanadu Quantum",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "2162162162162162176",
+          "referenceNote": "mirrors mainnet XNDU pricing"
+        },
+        {
+          "symbol": "mXOM",
+          "name": "Mock ExxonMobil Holdings Corporation",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "167656304575619968",
+          "referenceNote": "mirrors mainnet XOM pricing"
+        },
+        {
+          "symbol": "mZM",
+          "name": "Mock Zoom",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "285408490902604352",
+          "referenceNote": "mirrors mainnet ZM pricing"
+        },
+        {
+          "symbol": "mZS",
+          "name": "Mock Zscaler",
+          "address": "",
+          "decimals": 18,
+          "referenceAmount": "169887449564663392",
+          "referenceNote": "mirrors mainnet ZS pricing"
+        }
+      ]
+    }
+  }
+}

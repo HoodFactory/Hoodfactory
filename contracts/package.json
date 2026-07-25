@@ -1,0 +1,26 @@
+{
+  "name": "hoodfactory-contracts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "HOODFACTORY instant single-sided V3 launchpad contracts for Robinhood Chain (Token/WETH)",
+  "scripts": {
+    "build": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:infra:testnet": "hardhat run scripts/deploy-uniswap-infra.js --network robinhoodTestnet",
+    "deploy:testnet": "hardhat run scripts/deploy.js --network robinhoodTestnet",
+    "deploy:mainnet": "hardhat run scripts/deploy.js --network robinhoodMainnet",
+    "deploy:stock:testnet": "hardhat run scripts/deploy-stock-launchpad.js --network robinhoodTestnet",
+    "deploy:stock:mainnet": "hardhat run scripts/deploy-stock-launchpad.js --network robinhoodMainnet",
+    "seed:stock:testnet": "hardhat run scripts/seed-stock-eth-pool.js --network robinhoodTestnet",
+    "smoke:testnet": "hardhat run scripts/smoke.js --network robinhoodTestnet"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.4.0",
+    "@uniswap/swap-router-contracts": "^1.1.0",
+    "@uniswap/v3-core": "1.0.1",
+    "@uniswap/v3-periphery": "1.4.4",
+    "dotenv": "^16.4.5",
+    "hardhat": "^2.26.0"
+  }
+}
