@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/font/banner.png" alt="HOODFACTORY Banner" width="100%">
+  <img src="assets/fonts/banner.png" alt="HOODFACTORY Banner" width="100%">
 </p>
 
 <h1 align="center">HOODFACTORY</h1>
