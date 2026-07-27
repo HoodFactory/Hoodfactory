@@ -38,13 +38,7 @@ HOODFACTORY is an AI-assisted token launchpad and trading interface built for Ro
 
 The application never takes custody of a user's wallet or private keys. Contract deployments and transactions are prepared by the interface and must be reviewed and signed by the user.
 
-## Mainnet Deployment
-
-| Component | Address |
-| :--- | :--- |
-| **HoodLaunchpad** | [`0x91b641ADB805f89892526A532B6a973Bf70997cA`](https://robinhoodchain.blockscout.com/address/0x91b641ADB805f89892526A532B6a973Bf70997cA) |
-| **HoodStockLaunchpad** | [`0x96E41c466a749275DB6FC8a052dF9e5724F8685c`](https://robinhoodchain.blockscout.com/address/0x96E41c466a749275DB6FC8a052dF9e5724F8685c) |
-| **HoodSwapRouter** | [`0xF5032251a2385C84635aF5b2b976319720226a5d`](https://robinhoodchain.blockscout.com/address/0xF5032251a2385C84635aF5b2b976319720226a5d) |
+## Network and resource
 
 - **Network:** Robinhood Chain mainnet
 - **Chain ID:** `4663`
